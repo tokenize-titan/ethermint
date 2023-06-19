@@ -25,12 +25,7 @@ func (suite *KeeperTestSuite) TestMigrations() {
 	testCases := []struct {
 		name        string
 		migrateFunc func(ctx sdk.Context) error
-	}{
-		{
-			"Run Migrate3to4",
-			migrator.Migrate3to4,
-		},
-	}
+	}{}
 
 	for _, tc := range testCases {
 		suite.Run(tc.name, func() {
