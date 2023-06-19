@@ -5,11 +5,11 @@ import (
 	"io"
 	"testing"
 
+	dbm "github.com/cometbft/cometbft-db"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/testutil/sims"
 	"github.com/evmos/ethermint/encoding"
-	dbm "github.com/tendermint/tm-db"
 )
 
 func BenchmarkEthermintApp_ExportAppStateAndValidators(b *testing.B) {
