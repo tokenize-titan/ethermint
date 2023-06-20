@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"io"
 
-	"github.com/cometbft/cometbft/rpc/client/local"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
+	rpcclient "github.com/cometbft/cometbft/rpc/client"
 	cosmosclient "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -18,7 +18,7 @@ import (
 type Context struct {
 	cosmosclient.Context
 
-	RPCClient *local.Local
+	RPCClient rpcclient.Client
 }
 
 // WithKeyring returns a copy of the context with an updated keyring.
@@ -94,7 +94,7 @@ func (ctx Context) WithClient(client cosmosclient.TendermintRPC) Context {
 
 // WithClient returns a copy of the context with an updated RPC client
 // instance.
-func (ctx Context) WithRPCClient(client *local.Local) Context {
+func (ctx Context) WithRPCClient(client rpcclient.Client) Context {
 	ctx.RPCClient = client
 	return ctx
 }
@@ -244,4 +244,13 @@ func (ctx Context) WithLedgerHasProtobuf(val bool) Context {
 func (ctx Context) WithPreprocessTxHook(preprocessFn cosmosclient.PreprocessTxFn) Context {
 	ctx.PreprocessTxHook = preprocessFn
 	return ctx
+}
+
+// NewKeyringFromBackend gets a Keyring object from a backend
+func NewKeyringFromBackend(ctx Context, backend string) (keyring.Keyring, error) {
+	if ctx.Simulate {
+		backend = keyring.BackendMemory
+	}
+
+	return keyring.New(sdk.KeyringServiceName(), backend, ctx.KeyringDir, ctx.Input, ctx.Codec, ctx.KeyringOptions...)
 }

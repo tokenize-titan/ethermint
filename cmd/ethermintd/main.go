@@ -19,11 +19,12 @@ import (
 	"os"
 
 	"github.com/cosmos/cosmos-sdk/server"
-	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
+	// svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/evmos/ethermint/app"
 	cmdcfg "github.com/evmos/ethermint/cmd/config"
+	svrcmd "github.com/evmos/ethermint/server/cmd"
 )
 
 func main() {

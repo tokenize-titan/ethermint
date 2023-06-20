@@ -53,6 +53,8 @@ import (
 	appparams "github.com/evmos/ethermint/app/params"
 	ethermintclient "github.com/evmos/ethermint/client"
 	"github.com/evmos/ethermint/client/debug"
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
+	cosmosclientextconfig "github.com/evmos/ethermint/cosmos_client_ext/config"
 	"github.com/evmos/ethermint/crypto/hd"
 	"github.com/evmos/ethermint/encoding"
 	"github.com/evmos/ethermint/ethereum/eip712"
@@ -68,7 +70,7 @@ const EnvPrefix = "ETHERMINT"
 // main function.
 func NewRootCmd() (*cobra.Command, appparams.EncodingConfig) {
 	encodingConfig := encoding.MakeConfig(app.ModuleBasics)
-	initClientCtx := client.Context{}.
+	initClientCtx := cosmosclientext.Context{}.
 		WithCodec(encodingConfig.Marshaler).
 		WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
 		WithTxConfig(encodingConfig.TxConfig).
@@ -90,17 +92,17 @@ func NewRootCmd() (*cobra.Command, appparams.EncodingConfig) {
 			cmd.SetOut(cmd.OutOrStdout())
 			cmd.SetErr(cmd.ErrOrStderr())
 
-			initClientCtx, err := client.ReadPersistentCommandFlags(initClientCtx, cmd.Flags())
+			initClientCtx, err := cosmosclientext.ReadPersistentCommandFlags(initClientCtx, cmd.Flags())
 			if err != nil {
 				return err
 			}
 
-			initClientCtx, err = config.ReadFromClientConfig(initClientCtx)
+			initClientCtx, err = cosmosclientextconfig.ReadFromClientConfig(initClientCtx)
 			if err != nil {
 				return err
 			}
 
-			if err := client.SetCmdClientContextHandler(initClientCtx, cmd); err != nil {
+			if err := cosmosclientext.SetCmdClientContextHandler(initClientCtx, cmd); err != nil {
 				return err
 			}
 
