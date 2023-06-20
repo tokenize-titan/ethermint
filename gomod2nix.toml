@@ -202,11 +202,7 @@ schema = 3
     hash = "sha256-R7Gb9+Zjy80FbQSDGketoVEqfdOQKuOVTfWRjQ5kxZY="
   [mod."github.com/gogo/gateway"]
     version = "v1.1.0"
-    hash = "sha256-OHcA3fEGZt4uYn6V5BAaDc47DkH7z0Al+v7MpkfeR8o="
-  [mod."github.com/cosmos/gogoproto"]
-    version = "v1.3.3-alpha.regen.1"
-    hash = "sha256-TKa//aFXpWH+yK/cN1oaaqhipZpPUovekP6oA9vLIHY="
-    replaced = "github.com/regen-network/protobuf"
+    hash = "sha256-OHcA3fEGZt4uYn6V5BAaDc47DkH7z0Al+v7MpkfeR8o="  
   [mod."github.com/golang/glog"]
     version = "v1.0.0"
     hash = "sha256-bglITqRgzi52zc6FoYYnfCvrjFWV4RVOacPCnbEBom4="
@@ -458,14 +454,7 @@ schema = 3
     hash = "sha256-VODgdnIxK9bhCHrt4nKfPYk/LLycTIwSRi930fws3Pk="
   [mod."github.com/tendermint/go-amino"]
     version = "v0.16.0"
-    hash = "sha256-JW4zO/0vMzf1dXLePOqaMtiLUZgNbuIseh9GV+jQlf0="
-  [mod."github.com/tendermint/tendermint"]
-    version = "v0.34.27"
-    hash = "sha256-BbpfLcLRf6PwB1xmgkhTm9ckZekelrDUlXDX0/FSMU8="
-    replaced = "github.com/cometbft/cometbft"
-  [mod."github.com/cometbft/cometbft-db"]
-    version = "v0.6.7"
-    hash = "sha256-hl/3RrBrpkk2zA6dmrNlIYKs1/GfqegSscDSkA5Pjlo="
+    hash = "sha256-JW4zO/0vMzf1dXLePOqaMtiLUZgNbuIseh9GV+jQlf0="  
   [mod."github.com/tidwall/btree"]
     version = "v1.5.0"
     hash = "sha256-iWll4/+ADLVse3VAHxXYLprILugX/+3u0ZIk0YlLv/Q="

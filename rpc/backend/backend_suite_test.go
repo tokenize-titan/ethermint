@@ -19,6 +19,7 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	"github.com/evmos/ethermint/app"
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/crypto/ethsecp256k1"
 	"github.com/evmos/ethermint/crypto/hd"
 	"github.com/evmos/ethermint/encoding"
@@ -69,7 +70,7 @@ func (suite *BackendTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 
 	encodingConfig := encoding.MakeConfig(app.ModuleBasics)
-	clientCtx := client.Context{}.WithChainID(ChainID).
+	clientCtx := cosmosclientext.Context{}.WithChainID(ChainID).
 		WithHeight(1).
 		WithTxConfig(encodingConfig.TxConfig).
 		WithKeyringDir(clientDir).
@@ -77,7 +78,7 @@ func (suite *BackendTestSuite) SetupTest() {
 		WithAccountRetriever(client.TestAccountRetriever{Accounts: accounts})
 
 	allowUnprotectedTxs := false
-	idxer := indexer.NewKVIndexer(dbm.NewMemDB(), ctx.Logger, clientCtx)
+	idxer := indexer.NewKVIndexer(dbm.NewMemDB(), ctx.Logger, clientCtx.Context)
 
 	suite.backend = NewBackend(ctx, ctx.Logger, clientCtx, allowUnprotectedTxs, idxer)
 	suite.backend.queryClient.QueryClient = mocks.NewEVMQueryClient(suite.T())
@@ -87,7 +88,7 @@ func (suite *BackendTestSuite) SetupTest() {
 
 	// Add codec
 	encCfg := encoding.MakeConfig(app.ModuleBasics)
-	suite.backend.clientCtx.Codec = encCfg.Codec
+	suite.backend.clientCtx.Codec = encCfg.Marshaler
 }
 
 // buildEthereumTx returns an example legacy Ethereum transaction
@@ -167,7 +168,7 @@ func (suite *BackendTestSuite) buildFormattedBlock(
 func (suite *BackendTestSuite) generateTestKeyring(clientDir string) (keyring.Keyring, error) {
 	buf := bufio.NewReader(os.Stdin)
 	encCfg := encoding.MakeConfig(app.ModuleBasics)
-	return keyring.New(sdk.KeyringServiceName(), keyring.BackendTest, clientDir, buf, encCfg.Codec, []keyring.Option{hd.EthSecp256k1Option()}...)
+	return keyring.New(sdk.KeyringServiceName(), keyring.BackendTest, clientDir, buf, encCfg.Marshaler, []keyring.Option{hd.EthSecp256k1Option()}...)
 }
 
 func (suite *BackendTestSuite) signAndEncodeEthTx(msgEthereumTx *evmtypes.MsgEthereumTx) []byte {

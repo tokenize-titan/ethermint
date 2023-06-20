@@ -22,7 +22,7 @@ import (
 
 	"github.com/cometbft/cometbft/libs/log"
 	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/server"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -32,6 +32,7 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	rpctypes "github.com/evmos/ethermint/rpc/types"
 	"github.com/evmos/ethermint/server/config"
 	ethermint "github.com/evmos/ethermint/types"
@@ -142,12 +143,12 @@ type EVMBackend interface {
 
 var _ BackendI = (*Backend)(nil)
 
-var bAttributeKeyEthereumBloom = []byte(evmtypes.AttributeKeyEthereumBloom)
+var bAttributeKeyEthereumBloom = evmtypes.AttributeKeyEthereumBloom
 
 // Backend implements the BackendI interface
 type Backend struct {
 	ctx                 context.Context
-	clientCtx           client.Context
+	clientCtx           cosmosclientext.Context
 	queryClient         *rpctypes.QueryClient // gRPC query client
 	logger              log.Logger
 	chainID             *big.Int
@@ -160,7 +161,7 @@ type Backend struct {
 func NewBackend(
 	ctx *server.Context,
 	logger log.Logger,
-	clientCtx client.Context,
+	clientCtx cosmosclientext.Context,
 	allowUnprotectedTxs bool,
 	indexer ethermint.EVMTxIndexer,
 ) *Backend {
@@ -177,7 +178,7 @@ func NewBackend(
 	return &Backend{
 		ctx:                 context.Background(),
 		clientCtx:           clientCtx,
-		queryClient:         rpctypes.NewQueryClient(clientCtx),
+		queryClient:         rpctypes.NewQueryClient(clientCtx.Context),
 		logger:              logger.With("module", "backend"),
 		chainID:             chainID,
 		cfg:                 appConf,

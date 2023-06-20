@@ -87,7 +87,7 @@ func (b *Backend) GetProof(address common.Address, storageKeys []string, blockNr
 
 	for i, key := range storageKeys {
 		hexKey := common.HexToHash(key)
-		valueBz, proof, err := b.queryClient.GetProof(clientCtx, evmtypes.StoreKey, evmtypes.StateKey(address, hexKey.Bytes()))
+		valueBz, proof, err := b.queryClient.GetProof(clientCtx.Context, evmtypes.StoreKey, evmtypes.StateKey(address, hexKey.Bytes()))
 		if err != nil {
 			return nil, err
 		}
@@ -111,7 +111,7 @@ func (b *Backend) GetProof(address common.Address, storageKeys []string, blockNr
 
 	// query account proofs
 	accountKey := authtypes.AddressStoreKey(sdk.AccAddress(address.Bytes()))
-	_, proof, err := b.queryClient.GetProof(clientCtx, authtypes.StoreKey, accountKey)
+	_, proof, err := b.queryClient.GetProof(clientCtx.Context, authtypes.StoreKey, accountKey)
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +207,7 @@ func (b *Backend) GetTransactionCount(address common.Address, blockNum rpctypes.
 	from := sdk.AccAddress(address.Bytes())
 	accRet := b.clientCtx.AccountRetriever
 
-	err = accRet.EnsureExists(b.clientCtx, from)
+	err = accRet.EnsureExists(b.clientCtx.Context, from)
 	if err != nil {
 		// account doesn't exist yet, return 0
 		return &n, nil

@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	"github.com/evmos/ethermint/rpc/types"
 
 	"github.com/cometbft/cometbft/libs/log"
@@ -35,6 +35,7 @@ import (
 	"github.com/ethereum/go-ethereum/eth/filters"
 	"github.com/ethereum/go-ethereum/rpc"
 
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	evmtypes "github.com/evmos/ethermint/x/evm/types"
 )
 
@@ -85,7 +86,7 @@ type filter struct {
 // information related to the Ethereum protocol such as blocks, transactions and logs.
 type PublicFilterAPI struct {
 	logger    log.Logger
-	clientCtx client.Context
+	clientCtx cosmosclientext.Context
 	backend   Backend
 	events    *EventSystem
 	filtersMu sync.Mutex
@@ -93,7 +94,7 @@ type PublicFilterAPI struct {
 }
 
 // NewPublicAPI returns a new PublicFilterAPI instance.
-func NewPublicAPI(logger log.Logger, clientCtx client.Context, tmWSClient *rpcclient.WSClient, backend Backend) *PublicFilterAPI {
+func NewPublicAPI(logger log.Logger, clientCtx cosmosclientext.Context, tmWSClient *rpcclient.WSClient, backend Backend) *PublicFilterAPI {
 	logger = logger.With("api", "filter")
 	api := &PublicFilterAPI{
 		logger:    logger,

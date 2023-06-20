@@ -16,8 +16,8 @@
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	v4 "github.com/evmos/ethermint/x/feemarket/migrations/v4"
+	// sdk "github.com/cosmos/cosmos-sdk/types"
+	// v4 "github.com/evmos/ethermint/x/feemarket/migrations/v4"
 	"github.com/evmos/ethermint/x/feemarket/types"
 )
 

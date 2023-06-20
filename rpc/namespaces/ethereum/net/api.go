@@ -20,7 +20,8 @@ import (
 	"fmt"
 
 	rpcclient "github.com/cometbft/cometbft/rpc/client"
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	ethermint "github.com/evmos/ethermint/types"
 )
 
@@ -31,7 +32,7 @@ type PublicAPI struct {
 }
 
 // NewPublicAPI creates an instance of the public Net Web3 API.
-func NewPublicAPI(clientCtx client.Context) *PublicAPI {
+func NewPublicAPI(clientCtx cosmosclientext.Context) *PublicAPI {
 	// parse the chainID from a integer string
 	chainIDEpoch, err := ethermint.ParseChainID(clientCtx.ChainID)
 	if err != nil {
@@ -40,7 +41,7 @@ func NewPublicAPI(clientCtx client.Context) *PublicAPI {
 
 	return &PublicAPI{
 		networkVersion: chainIDEpoch.Uint64(),
-		tmClient:       clientCtx.Client,
+		tmClient:       clientCtx.RPCClient,
 	}
 }
 

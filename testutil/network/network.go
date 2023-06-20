@@ -64,6 +64,7 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	appparams "github.com/evmos/ethermint/app/params"
 
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/crypto/hd"
 	"github.com/evmos/ethermint/encoding"
 	"github.com/evmos/ethermint/server/config"
@@ -129,13 +130,13 @@ func DefaultConfig() Config {
 	encCfg := encoding.MakeConfig(app.ModuleBasics)
 
 	return Config{
-		Codec:             encCfg.Codec,
+		Codec:             encCfg.Marshaler,
 		TxConfig:          encCfg.TxConfig,
 		LegacyAmino:       encCfg.Amino,
 		InterfaceRegistry: encCfg.InterfaceRegistry,
 		AccountRetriever:  authtypes.AccountRetriever{},
 		AppConstructor:    NewAppConstructor(encCfg),
-		GenesisState:      app.ModuleBasics.DefaultGenesis(encCfg.Codec),
+		GenesisState:      app.ModuleBasics.DefaultGenesis(encCfg.Marshaler),
 		TimeoutCommit:     2 * time.Second,
 		ChainID:           fmt.Sprintf("ethermint_%d-1", tmrand.Int63n(9999999999999)+1),
 		NumValidators:     4,
@@ -176,7 +177,7 @@ type (
 	// or handler.
 	Validator struct {
 		AppConfig     *config.Config
-		ClientCtx     client.Context
+		ClientCtx     cosmosclientext.Context
 		Ctx           *server.Context
 		Dir           string
 		NodeID        string
@@ -496,7 +497,8 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 			return nil, err
 		}
 
-		clientCtx := client.Context{}.
+		// TODO : missing `WithRPCClient`
+		clientCtx := cosmosclientext.Context{}.
 			WithKeyringDir(clientDir).
 			WithKeyring(kb).
 			WithHomeDir(tmCfg.RootDir).

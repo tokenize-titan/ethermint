@@ -7,7 +7,7 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/cosmos/ibc-go/v7/testing/simapp"
+	// "github.com/cosmos/ibc-go/v7/testing/simapp"
 
 	sdkmath "cosmossdk.io/math"
 	"github.com/stretchr/testify/suite"
@@ -423,6 +423,8 @@ func (suite *AnteTestSuite) CreateTestEIP712SubmitProposalV1(from sdk.AccAddress
 		sdk.NewCoins(sdk.NewCoin(evmtypes.DefaultEVMDenom, sdkmath.NewInt(100))),
 		sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), from.Bytes()),
 		"Metadata",
+		"title",
+		"summary",
 	)
 
 	suite.Require().NoError(err)

@@ -33,7 +33,7 @@ func MakeConfig(mb module.BasicManager) appparams.EncodingConfig {
 
 	encodingConfig := appparams.EncodingConfig{
 		InterfaceRegistry: interfaceRegistry,
-		Codec:             codec,
+		Marshaler:         codec,
 		TxConfig:          tx.NewTxConfig(codec, tx.DefaultSignModes),
 		Amino:             cdc,
 	}

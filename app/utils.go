@@ -40,8 +40,8 @@ import (
 
 // DefaultConsensusParams defines the default Tendermint consensus params used in
 // EthermintApp testing.
-var DefaultConsensusParams = &abci.ConsensusParams{
-	Block: &abci.BlockParams{
+var DefaultConsensusParams = &tmproto.ConsensusParams{
+	Block: &tmproto.BlockParams{
 		MaxBytes: 200000,
 		MaxGas:   -1, // no limit
 	},
@@ -58,12 +58,12 @@ var DefaultConsensusParams = &abci.ConsensusParams{
 }
 
 // Setup initializes a new EthermintApp. A Nop logger is set in EthermintApp.
-func Setup(isCheckTx bool, patchGenesis func(*EthermintApp, app.GenesisState) app.GenesisState) *EthermintApp {
+func Setup(isCheckTx bool, patchGenesis func(*EthermintApp, GenesisState) GenesisState) *EthermintApp {
 	return SetupWithDB(isCheckTx, patchGenesis, dbm.NewMemDB())
 }
 
 // SetupWithDB initializes a new EthermintApp. A Nop logger is set in EthermintApp.
-func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, app.GenesisState) app.GenesisState, db dbm.DB) *EthermintApp {
+func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, GenesisState) GenesisState, db dbm.DB) *EthermintApp {
 	app := NewEthermintApp(log.NewNopLogger(),
 		db,
 		nil,
@@ -100,7 +100,7 @@ func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, app.GenesisSta
 }
 
 // NewTestGenesisState generate genesis state with single validator
-func NewTestGenesisState(codec codec.Codec) app.GenesisState {
+func NewTestGenesisState(codec codec.Codec) GenesisState {
 	privVal := mock.NewPV()
 	pubKey, err := privVal.GetPubKey()
 	if err != nil {
@@ -118,14 +118,14 @@ func NewTestGenesisState(codec codec.Codec) app.GenesisState {
 		Coins:   sdk.NewCoins(sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(100000000000000))),
 	}
 
-	genesisState := NewDefaultGenesisState()
+	genesisState := NewDefaultGenesisState(codec)
 	return genesisStateWithValSet(codec, genesisState, valSet, []authtypes.GenesisAccount{acc}, balance)
 }
 
-func genesisStateWithValSet(codec codec.Codec, genesisState app.GenesisState,
+func genesisStateWithValSet(codec codec.Codec, genesisState GenesisState,
 	valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount,
 	balances ...banktypes.Balance,
-) app.GenesisState {
+) GenesisState {
 	// set genesis accounts
 	authGenesis := authtypes.NewGenesisState(authtypes.DefaultParams(), genAccs)
 	genesisState[authtypes.ModuleName] = codec.MustMarshalJSON(authGenesis)
@@ -182,7 +182,7 @@ func genesisStateWithValSet(codec codec.Codec, genesisState app.GenesisState,
 	})
 
 	// update total supply
-	bankGenesis := banktypes.NewGenesisState(banktypes.DefaultGenesisState().Params, balances, totalSupply, []banktypes.Metadata{})
+	bankGenesis := banktypes.NewGenesisState(banktypes.DefaultGenesisState().Params, balances, totalSupply, []banktypes.Metadata{}, []banktypes.SendEnabled{})
 	genesisState[banktypes.ModuleName] = codec.MustMarshalJSON(bankGenesis)
 
 	return genesisState

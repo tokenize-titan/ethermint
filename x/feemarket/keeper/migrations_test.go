@@ -20,7 +20,7 @@ func (ms mockSubspace) GetParamSetIfExists(_ sdk.Context, ps types.LegacyParams)
 
 func (suite *KeeperTestSuite) TestMigrations() {
 	legacySubspace := newMockSubspace(types.DefaultParams())
-	migrator := feemarketkeeper.NewMigrator(suite.app.FeeMarketKeeper, legacySubspace)
+	_ = feemarketkeeper.NewMigrator(suite.app.FeeMarketKeeper, legacySubspace) // migrator :=
 
 	testCases := []struct {
 		name        string

@@ -22,20 +22,21 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/types"
 	ethlog "github.com/ethereum/go-ethereum/log"
 	ethrpc "github.com/ethereum/go-ethereum/rpc"
 	"github.com/evmos/ethermint/rpc"
 
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/server/config"
 	ethermint "github.com/evmos/ethermint/types"
 )
 
 // StartJSONRPC starts the JSON-RPC server
 func StartJSONRPC(ctx *server.Context,
-	clientCtx client.Context,
+	clientCtx cosmosclientext.Context,
 	tmRPCAddr,
 	tmEndpoint string,
 	config *config.Config,

@@ -16,7 +16,6 @@
 package types
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"math/big"
@@ -26,7 +25,7 @@ import (
 	tmtypes "github.com/cometbft/cometbft/types"
 
 	errorsmod "cosmossdk.io/errors"
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
 
 	evmtypes "github.com/evmos/ethermint/x/evm/types"
@@ -37,6 +36,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/math"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/params"
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 )
 
 // ExceedBlockGasLimitError defines the error message when tx execution exceeds the block gas limit.
@@ -44,7 +44,7 @@ import (
 const ExceedBlockGasLimitError = "out of gas in location: block gas meter; gasWanted:"
 
 // RawTxToEthTx returns a evm MsgEthereum transaction from raw tx bytes.
-func RawTxToEthTx(clientCtx client.Context, txBz tmtypes.Tx) ([]*evmtypes.MsgEthereumTx, error) {
+func RawTxToEthTx(clientCtx cosmosclientext.Context, txBz tmtypes.Tx) ([]*evmtypes.MsgEthereumTx, error) {
 	tx, err := clientCtx.TxConfig.TxDecoder()(txBz)
 	if err != nil {
 		return nil, errorsmod.Wrap(errortypes.ErrJSONUnmarshal, err.Error())
@@ -91,8 +91,8 @@ func EthHeaderFromTendermint(header tmtypes.Header, bloom ethtypes.Bloom, baseFe
 }
 
 // BlockMaxGasFromConsensusParams returns the gas limit for the current block from the chain consensus params.
-func BlockMaxGasFromConsensusParams(goCtx context.Context, clientCtx client.Context, blockHeight int64) (int64, error) {
-	resConsParams, err := clientCtx.Client.ConsensusParams(goCtx, &blockHeight)
+func BlockMaxGasFromConsensusParams(goCtx context.Context, clientCtx cosmosclientext.Context, blockHeight int64) (int64, error) {
+	resConsParams, err := clientCtx.RPCClient.ConsensusParams(goCtx, &blockHeight)
 	if err != nil {
 		return int64(^uint32(0)), err
 	}
@@ -235,7 +235,7 @@ func BaseFeeFromEvents(events []abci.Event) *big.Int {
 		}
 
 		for _, attr := range event.Attributes {
-			if bytes.Equal(attr.Key, []byte(feemarkettypes.AttributeKeyBaseFee)) {
+			if attr.Key == feemarkettypes.AttributeKeyBaseFee {
 				result, success := new(big.Int).SetString(string(attr.Value), 10)
 				if success {
 					return result

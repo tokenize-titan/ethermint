@@ -26,7 +26,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
@@ -41,6 +41,7 @@ import (
 	rpcclient "github.com/cometbft/cometbft/rpc/jsonrpc/client"
 	tmtypes "github.com/cometbft/cometbft/types"
 
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/rpc/ethereum/pubsub"
 	rpcfilters "github.com/evmos/ethermint/rpc/namespaces/ethereum/eth/filters"
 	"github.com/evmos/ethermint/rpc/types"
@@ -89,7 +90,7 @@ type websocketsServer struct {
 	logger   log.Logger
 }
 
-func NewWebsocketsServer(clientCtx client.Context, logger log.Logger, tmWSClient *rpcclient.WSClient, cfg *config.Config) WebsocketsServer {
+func NewWebsocketsServer(clientCtx cosmosclientext.Context, logger log.Logger, tmWSClient *rpcclient.WSClient, cfg *config.Config) WebsocketsServer {
 	logger = logger.With("api", "websocket-server")
 	_, port, _ := net.SplitHostPort(cfg.JSONRPC.Address)
 
@@ -346,11 +347,11 @@ func (s *websocketsServer) tcpGetAndSendResponse(wsConn *wsConn, mb []byte) erro
 type pubSubAPI struct {
 	events    *rpcfilters.EventSystem
 	logger    log.Logger
-	clientCtx client.Context
+	clientCtx cosmosclientext.Context
 }
 
 // newPubSubAPI creates an instance of the ethereum PubSub API.
-func newPubSubAPI(clientCtx client.Context, logger log.Logger, tmWSClient *rpcclient.WSClient) *pubSubAPI {
+func newPubSubAPI(clientCtx cosmosclientext.Context, logger log.Logger, tmWSClient *rpcclient.WSClient) *pubSubAPI {
 	logger = logger.With("module", "websocket-client")
 	return &pubSubAPI{
 		events:    rpcfilters.NewEventSystem(logger, tmWSClient),

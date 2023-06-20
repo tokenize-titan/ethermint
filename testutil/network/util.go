@@ -95,14 +95,14 @@ func startInProcess(cfg Config, val *Validator) error {
 			WithClient(val.RPCClient)
 
 		// Add the tx service in the gRPC router.
-		app.RegisterTxService(val.ClientCtx)
+		app.RegisterTxService(val.ClientCtx.Context)
 
 		// Add the tendermint queries service in the gRPC router.
-		app.RegisterTendermintService(val.ClientCtx)
+		app.RegisterTendermintService(val.ClientCtx.Context)
 	}
 
 	if val.AppConfig.API.Enable && val.APIAddress != "" {
-		apiSrv := api.New(val.ClientCtx, logger.With("module", "api-server"))
+		apiSrv := api.New(val.ClientCtx.Context, logger.With("module", "api-server"))
 		app.RegisterAPIRoutes(apiSrv, val.AppConfig.API)
 
 		errCh := make(chan error)
@@ -123,7 +123,7 @@ func startInProcess(cfg Config, val *Validator) error {
 	}
 
 	if val.AppConfig.GRPC.Enable {
-		grpcSrv, err := servergrpc.StartGRPCServer(val.ClientCtx, app, val.AppConfig.GRPC)
+		grpcSrv, err := servergrpc.StartGRPCServer(val.ClientCtx.Context, app, val.AppConfig.GRPC)
 		if err != nil {
 			return err
 		}
@@ -183,7 +183,7 @@ func collectGenFiles(cfg Config, vals []*Validator, outputDir string) error {
 		}
 
 		appState, err := genutil.GenAppStateFromConfig(cfg.Codec, cfg.TxConfig,
-			tmCfg, initCfg, *genDoc, banktypes.GenesisBalancesIterator{})
+			tmCfg, initCfg, *genDoc, banktypes.GenesisBalancesIterator{}, genutiltypes.DefaultMessageValidator)
 		if err != nil {
 			return err
 		}

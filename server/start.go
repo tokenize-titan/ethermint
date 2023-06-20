@@ -51,7 +51,7 @@ import (
 	ethmetricsexp "github.com/ethereum/go-ethereum/metrics/exp"
 
 	errorsmod "cosmossdk.io/errors"
-	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/api"
@@ -61,6 +61,7 @@ import (
 	pruningtypes "github.com/cosmos/cosmos-sdk/store/pruning/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/indexer"
 	ethdebug "github.com/evmos/ethermint/rpc/namespaces/ethereum/debug"
 	"github.com/evmos/ethermint/server/config"
@@ -130,7 +131,7 @@ which accepts a path for the resulting pprof file.
 		},
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			serverCtx := server.GetServerContextFromCmd(cmd)
-			clientCtx, err := client.GetClientQueryContext(cmd)
+			clientCtx, err := cosmosclientext.GetClientQueryContext(cmd)
 			if err != nil {
 				return err
 			}
@@ -288,7 +289,7 @@ func startStandAlone(ctx *server.Context, opts StartOptions) error {
 }
 
 // legacyAminoCdc is used for the legacy REST API
-func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOptions) (err error) {
+func startInProcess(ctx *server.Context, clientCtx cosmosclientext.Context, opts StartOptions) (err error) {
 	cfg := ctx.Config
 	home := cfg.RootDir
 	logger := ctx.Logger
@@ -401,15 +402,24 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 	// Add the tx service to the gRPC router. We only need to register this
 	// service if API or gRPC or JSONRPC is enabled, and avoid doing so in the general
 	// case, because it spawns a new local tendermint RPC client.
+
+	rcpclient := local.New(tmNode)
+	clientCtx = clientCtx.WithClient(rcpclient)
+	clientCtx = clientCtx.WithRPCClient(rcpclient)
+	// clientCtx.Client = rcpclient.(local.Local)
+
+	// clientCtx = clientCtx.WithClient(local.New(tmNode))
+
+	// rcpclient := local.Local(clientCtx.Client)
+
 	if (config.API.Enable || config.GRPC.Enable || config.JSONRPC.Enable || config.JSONRPC.EnableIndexer) && tmNode != nil {
-		clientCtx = clientCtx.WithClient(local.New(tmNode))
 
-		app.RegisterTxService(clientCtx)
-		app.RegisterTendermintService(clientCtx)
+		app.RegisterTxService(clientCtx.Context)
+		app.RegisterTendermintService(clientCtx.Context)
 
-		if a, ok := app.(types.ApplicationQueryService); ok {
-			a.RegisterNodeService(clientCtx)
-		}
+		// if a, ok := app.(types.ApplicationQueryService); ok {
+		app.RegisterNodeService(clientCtx.Context)
+		// }
 	}
 
 	metrics, err := startTelemetry(config)
@@ -432,8 +442,8 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		}
 
 		idxLogger := ctx.Logger.With("indexer", "evm")
-		idxer = indexer.NewKVIndexer(idxDB, idxLogger, clientCtx)
-		indexerService := NewEVMIndexerService(idxer, clientCtx.Client)
+		idxer = indexer.NewKVIndexer(idxDB, idxLogger, clientCtx.Context)
+		indexerService := NewEVMIndexerService(idxer, rcpclient)
 		indexerService.SetLogger(idxLogger)
 
 		errCh := make(chan error)
@@ -501,7 +511,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 
 	var apiSrv *api.Server
 	if config.API.Enable {
-		apiSrv = api.New(clientCtx, ctx.Logger.With("server", "api"))
+		apiSrv = api.New(clientCtx.Context, ctx.Logger.With("server", "api"))
 		app.RegisterAPIRoutes(apiSrv, config.API)
 
 		if config.Telemetry.Enabled {
@@ -530,7 +540,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 	)
 
 	if config.GRPC.Enable {
-		grpcSrv, err = servergrpc.StartGRPCServer(clientCtx, app, config.GRPC)
+		grpcSrv, err = servergrpc.StartGRPCServer(clientCtx.Context, app, config.GRPC)
 		if err != nil {
 			return err
 		}

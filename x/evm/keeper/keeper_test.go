@@ -224,7 +224,7 @@ func (suite *KeeperTestSuite) SetupAppWithT(checkTx bool, t require.TestingT) {
 	encodingConfig := encoding.MakeConfig(app.ModuleBasics)
 	suite.clientCtx = client.Context{}.WithTxConfig(encodingConfig.TxConfig)
 	suite.ethSigner = ethtypes.LatestSignerForChainID(suite.app.EvmKeeper.ChainID())
-	suite.appCodec = encodingConfig.Codec
+	suite.appCodec = encodingConfig.Marshaler
 	suite.denom = evmtypes.DefaultEVMDenom
 }
 
