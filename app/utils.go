@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
@@ -72,7 +73,9 @@ func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, GenesisState) 
 		DefaultNodeHome,
 		5,
 		encoding.MakeConfig(ModuleBasics),
-		sims.NewAppOptionsWithFlagHome(DefaultNodeHome))
+		sims.NewAppOptionsWithFlagHome(DefaultNodeHome),
+		baseapp.SetChainID("ethermint_9000-1"),
+	)
 	if !isCheckTx {
 		// init chain must be called to stop deliverState from being nil
 		genesisState := NewTestGenesisState(app.AppCodec())
