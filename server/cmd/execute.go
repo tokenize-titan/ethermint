@@ -7,6 +7,7 @@ import (
 	tmcli "github.com/cometbft/cometbft/libs/cli"
 	"github.com/spf13/cobra"
 
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/server"
 
@@ -38,6 +39,8 @@ func Execute(rootCmd *cobra.Command, envPrefix string, defaultHome string) error
 func CreateExecuteContext(ctx context.Context) context.Context {
 	srvCtx := server.NewDefaultContext()
 	ctx = context.WithValue(ctx, cosmosclientext.ClientContextKey, &cosmosclientext.Context{})
+	cosmosclientcontext := cosmosclientext.Context{}.Context
+	ctx = context.WithValue(ctx, client.ClientContextKey, &cosmosclientcontext)
 	ctx = context.WithValue(ctx, server.ServerContextKey, srvCtx)
 
 	return ctx

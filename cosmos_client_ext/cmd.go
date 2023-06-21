@@ -182,5 +182,13 @@ func SetCmdClientContext(cmd *cobra.Command, clientCtx Context) error {
 	clientCtxPtr := v.(*Context)
 	*clientCtxPtr = clientCtx
 
+	v2 := cmd.Context().Value(cosmosclient.ClientContextKey)
+	if v == nil {
+		return errors.New("client context not set")
+	}
+
+	clientCtxPtr2 := v2.(*cosmosclient.Context)
+	*clientCtxPtr2 = clientCtx.Context
+
 	return nil
 }
