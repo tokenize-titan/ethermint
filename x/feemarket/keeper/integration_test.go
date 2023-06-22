@@ -492,8 +492,9 @@ func setupChain(localMinGasPricesStr string) {
 		app.DefaultNodeHome,
 		5,
 		encoding.MakeConfig(app.ModuleBasics),
-		sims.NewAppOptionsWithFlagHome(val.Ctx.Config.RootDir),
+		sims.EmptyAppOptions{},
 		baseapp.SetMinGasPrices(localMinGasPricesStr),
+		baseapp.SetChainID("ethermint_9000-1"),
 	)
 
 	genesisState := app.NewTestGenesisState(newapp.AppCodec())
