@@ -96,6 +96,7 @@ func (ctx Context) WithClient(client cosmosclient.TendermintRPC) Context {
 // instance.
 func (ctx Context) WithRPCClient(client rpcclient.Client) Context {
 	ctx.RPCClient = client
+	ctx.Client = client
 	return ctx
 }
 
