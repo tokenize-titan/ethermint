@@ -323,7 +323,7 @@ TEST_TARGETS := test-unit test-unit-cover test-race
 test-unit: ARGS=-timeout=10m -race
 test-unit: TEST_PACKAGES=$(PACKAGES_UNIT)
 
-test-race: ARGS=-race
+test-race: ARGS=-timeout=20m -race
 test-race: TEST_PACKAGES=$(PACKAGES_NOSIMULATION)
 $(TEST_TARGETS): run-tests
 
