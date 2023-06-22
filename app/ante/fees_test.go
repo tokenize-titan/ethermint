@@ -346,6 +346,6 @@ func (s AnteTestSuite) TestEthMinGasPriceDecorator() {
 	}
 }
 
-func (suite AnteTestSuite) TestEthMempoolFeeDecorator() {
+func (suite *AnteTestSuite) TestEthMempoolFeeDecorator() {
 	// TODO: add test
 }
