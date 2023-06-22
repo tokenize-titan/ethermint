@@ -575,6 +575,9 @@ func startInProcess(ctx *server.Context, clientCtx cosmosclientext.Context, opts
 
 		tmEndpoint := "/websocket"
 		tmRPCAddr := cfg.RPC.ListenAddress
+		// TODO: (workaround) for some reason `tests/solidity/test-helper.js` not detect output stream
+		// 				add println to workaround that bug
+		println("Starting JSON-RPC server")
 		httpSrv, httpSrvDone, err = StartJSONRPC(ctx, clientCtx, tmRPCAddr, tmEndpoint, &config, idxer)
 		if err != nil {
 			return err
