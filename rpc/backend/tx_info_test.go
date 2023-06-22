@@ -54,7 +54,7 @@ func (suite *BackendTestSuite) TestGetTransactionByHash() {
 		{
 			"fail - Block error",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, 1)
 			},
 			msgEthereumTx,
@@ -64,7 +64,7 @@ func (suite *BackendTestSuite) TestGetTransactionByHash() {
 		{
 			"fail - Block Result error",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, 1, txBz)
 				RegisterBlockResultsError(client, 1)
 			},
@@ -75,7 +75,7 @@ func (suite *BackendTestSuite) TestGetTransactionByHash() {
 		{
 			"pass - Base fee error",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBlock(client, 1, txBz)
 				RegisterBlockResults(client, 1)
@@ -88,7 +88,7 @@ func (suite *BackendTestSuite) TestGetTransactionByHash() {
 		{
 			"pass - Transaction found and returned",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBlock(client, 1, txBz)
 				RegisterBlockResults(client, 1)
@@ -136,7 +136,7 @@ func (suite *BackendTestSuite) TestGetTransactionsByHashPending() {
 		{
 			"fail - Pending transactions returns error",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterUnconfirmedTxsError(client, nil)
 			},
 			msgEthereumTx,
@@ -146,7 +146,7 @@ func (suite *BackendTestSuite) TestGetTransactionsByHashPending() {
 		{
 			"fail - Tx not found return nil",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterUnconfirmedTxs(client, nil, nil)
 			},
 			msgEthereumTx,
@@ -156,7 +156,7 @@ func (suite *BackendTestSuite) TestGetTransactionsByHashPending() {
 		{
 			"pass - Tx found and returned",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterUnconfirmedTxs(client, nil, types.Txs{bz})
 			},
 			msgEthereumTx,
@@ -197,7 +197,7 @@ func (suite *BackendTestSuite) TestGetTxByEthHash() {
 			"fail - Indexer disabled can't find transaction",
 			func() {
 				suite.backend.indexer = nil
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				query := fmt.Sprintf("%s.%s='%s'", evmtypes.TypeMsgEthereumTx, evmtypes.AttributeKeyEthereumTxHash, common.HexToHash(msgEthereumTx.Hash).Hex())
 				RegisterTxSearch(client, query, bz)
 			},
@@ -237,7 +237,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockHashAndIndex() {
 		{
 			"pass - block not found",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, common.Hash{}, bz)
 			},
 			common.Hash{},
@@ -247,7 +247,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockHashAndIndex() {
 		{
 			"pass - Block results error",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHash(client, common.Hash{}, bz)
 				RegisterBlockResultsError(client, 1)
 			},
@@ -313,7 +313,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockAndIndex() {
 		{
 			"pass - block txs index out of bound ",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockResults(client, 1)
 			},
 			&tmrpctypes.ResultBlock{Block: types.MakeBlock(1, []types.Tx{bz}, nil, nil)},
@@ -325,7 +325,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockAndIndex() {
 			"pass - Can't fetch base fee",
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockResults(client, 1)
 				RegisterBaseFeeError(queryClient)
 			},
@@ -338,7 +338,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockAndIndex() {
 			"pass - Gets Tx by transaction index",
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				db := dbm.NewMemDB()
 				suite.backend.indexer = indexer.NewKVIndexer(db, tmlog.NewNopLogger(), suite.backend.clientCtx.Context)
 				txBz := suite.signAndEncodeEthTx(msgEthTx)
@@ -357,7 +357,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockAndIndex() {
 			"pass - returns the Ethereum format transaction by the Ethereum hash",
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockResults(client, 1)
 				RegisterBaseFee(queryClient, sdk.NewInt(1))
 			},
@@ -407,7 +407,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockNumberAndIndex() {
 		{
 			"fail -  block not found return nil",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, 1)
 			},
 			0,
@@ -418,7 +418,7 @@ func (suite *BackendTestSuite) TestGetTransactionByBlockNumberAndIndex() {
 		{
 			"pass - returns the transaction identified by block number and index",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBlock(client, 1, bz)
 				RegisterBlockResults(client, 1)
@@ -461,7 +461,7 @@ func (suite *BackendTestSuite) TestGetTransactionByTxIndex() {
 		{
 			"fail - Ethereum tx with query not found",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				suite.backend.indexer = nil
 				RegisterTxSearch(client, "tx.height=0 AND ethereum_tx.txIndex=0", bz)
 			},
@@ -501,7 +501,7 @@ func (suite *BackendTestSuite) TestQueryTendermintTxIndexer() {
 		{
 			"fail - Ethereum tx with query not found",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterTxSearchEmpty(client, "")
 			},
 			func(txs *rpctypes.ParsedTxs) *rpctypes.ParsedTx {
@@ -550,7 +550,7 @@ func (suite *BackendTestSuite) TestGetTransactionReceipt() {
 			func() {
 				var header metadata.MD
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterParams(queryClient, &header, 1)
 				RegisterParamsWithoutHeader(queryClient, 1)
 				RegisterBlock(client, 1, txBz)

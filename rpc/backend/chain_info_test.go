@@ -198,7 +198,7 @@ func (suite *BackendTestSuite) TestGetCoinbase() {
 		{
 			"fail - Can't retrieve status from node",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterStatusError(client)
 			},
 			validatorAcc,
@@ -207,7 +207,7 @@ func (suite *BackendTestSuite) TestGetCoinbase() {
 		{
 			"fail - Can't query validator account",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterStatus(client)
 				RegisterValidatorAccountError(queryClient)
@@ -218,7 +218,7 @@ func (suite *BackendTestSuite) TestGetCoinbase() {
 		{
 			"pass - Gets coinbase account",
 			func() {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterStatus(client)
 				RegisterValidatorAccount(queryClient, validatorAcc)
@@ -359,7 +359,7 @@ func (suite *BackendTestSuite) TestFeeHistory() {
 		{
 			"fail - Tendermint block fetching error ",
 			func(validator sdk.AccAddress) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				suite.backend.cfg.JSONRPC.FeeHistoryCap = 2
 				RegisterBlockError(client, ethrpc.BlockNumber(1).Int64())
 			},
@@ -372,7 +372,7 @@ func (suite *BackendTestSuite) TestFeeHistory() {
 		{
 			"fail - Eth block fetching error",
 			func(validator sdk.AccAddress) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				suite.backend.cfg.JSONRPC.FeeHistoryCap = 2
 				RegisterBlock(client, ethrpc.BlockNumber(1).Int64(), nil)
 				RegisterBlockResultsError(client, 1)
@@ -388,7 +388,7 @@ func (suite *BackendTestSuite) TestFeeHistory() {
 			func(validator sdk.AccAddress) {
 				// baseFee := sdk.NewInt(1)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				suite.backend.cfg.JSONRPC.FeeHistoryCap = 2
 				RegisterBlock(client, ethrpc.BlockNumber(1).Int64(), nil)
 				RegisterBlockResults(client, 1)
@@ -408,7 +408,7 @@ func (suite *BackendTestSuite) TestFeeHistory() {
 				var header metadata.MD
 				baseFee := sdk.NewInt(1)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				suite.backend.cfg.JSONRPC.FeeHistoryCap = 2
 				RegisterBlock(client, ethrpc.BlockNumber(1).Int64(), nil)
 				RegisterBlockResults(client, 1)

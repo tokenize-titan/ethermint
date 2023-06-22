@@ -96,7 +96,7 @@ func (suite *BackendTestSuite) TestGetProof() {
 			[]string{},
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNrInvalid},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterAccount(queryClient, addr, blockNrInvalid.Int64())
@@ -110,7 +110,7 @@ func (suite *BackendTestSuite) TestGetProof() {
 			[]string{},
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNrInvalid},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, bn.Int64())
 			},
 			false,
@@ -124,7 +124,7 @@ func (suite *BackendTestSuite) TestGetProof() {
 			func(bn rpctypes.BlockNumber, addr common.Address) {
 				suite.backend.ctx = rpctypes.ContextWithHeight(bn.Int64())
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterAccount(queryClient, addr, bn.Int64())
@@ -268,7 +268,7 @@ func (suite *BackendTestSuite) TestGetBalance() {
 			tests.GenerateAddress(),
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNr},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, bn.Int64())
 			},
 			false,
@@ -279,7 +279,7 @@ func (suite *BackendTestSuite) TestGetBalance() {
 			tests.GenerateAddress(),
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNr},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBalanceError(queryClient, addr, bn.Int64())
@@ -292,7 +292,7 @@ func (suite *BackendTestSuite) TestGetBalance() {
 			tests.GenerateAddress(),
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNr},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBalanceInvalid(queryClient, addr, bn.Int64())
@@ -305,7 +305,7 @@ func (suite *BackendTestSuite) TestGetBalance() {
 			tests.GenerateAddress(),
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNr},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBalanceNegative(queryClient, addr, bn.Int64())
@@ -318,7 +318,7 @@ func (suite *BackendTestSuite) TestGetBalance() {
 			tests.GenerateAddress(),
 			rpctypes.BlockNumberOrHash{BlockNumber: &blockNr},
 			func(bn rpctypes.BlockNumber, addr common.Address) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, bn.Int64(), nil)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterBalance(queryClient, addr, bn.Int64())
@@ -386,7 +386,7 @@ func (suite *BackendTestSuite) TestGetTransactionCount() {
 		//	true,
 		//	rpctypes.NewBlockNumber(big.NewInt(1)),
 		//	func(addr common.Address, bn rpctypes.BlockNumber) {
-		//		client := suite.backend.clientCtx.Client.(*mocks.Client)
+		//		client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 		//		account, err := suite.backend.clientCtx.AccountRetriever.GetAccount(suite.backend.clientCtx, suite.acc)
 		//		suite.Require().NoError(err)
 		//		request := &authtypes.QueryAccountRequest{Address: sdk.AccAddress(suite.acc.Bytes()).String()}

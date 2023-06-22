@@ -107,7 +107,7 @@ func (suite *BackendTestSuite) TestGetBlockByNumber() {
 			nil,
 			func(blockNum ethrpc.BlockNumber, _ sdk.Int, _ sdk.AccAddress, _ []byte) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, height)
 			},
 			true,
@@ -123,7 +123,7 @@ func (suite *BackendTestSuite) TestGetBlockByNumber() {
 			nil,
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockNotFound(client, height)
 			},
 			true,
@@ -139,7 +139,7 @@ func (suite *BackendTestSuite) TestGetBlockByNumber() {
 			nil,
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlock(client, height, txBz)
 				RegisterBlockResultsError(client, blockNum.Int64())
 			},
@@ -156,7 +156,7 @@ func (suite *BackendTestSuite) TestGetBlockByNumber() {
 			nil,
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlock(client, height, txBz)
 				blockRes, _ = RegisterBlockResults(client, blockNum.Int64())
 				RegisterConsensusParams(client, height)
@@ -178,7 +178,7 @@ func (suite *BackendTestSuite) TestGetBlockByNumber() {
 			bz,
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlock(client, height, txBz)
 				blockRes, _ = RegisterBlockResults(client, blockNum.Int64())
 				RegisterConsensusParams(client, height)
@@ -251,7 +251,7 @@ func (suite *BackendTestSuite) TestGetBlockByHash() {
 			nil,
 			nil,
 			func(hash common.Hash, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, hash, txBz)
 			},
 			false,
@@ -266,7 +266,7 @@ func (suite *BackendTestSuite) TestGetBlockByHash() {
 			nil,
 			nil,
 			func(hash common.Hash, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashNotFound(client, hash, txBz)
 			},
 			true,
@@ -282,7 +282,7 @@ func (suite *BackendTestSuite) TestGetBlockByHash() {
 			nil,
 			func(hash common.Hash, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, hash, txBz)
 
 				RegisterBlockResultsError(client, height)
@@ -300,7 +300,7 @@ func (suite *BackendTestSuite) TestGetBlockByHash() {
 			nil,
 			func(hash common.Hash, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, hash, txBz)
 
 				blockRes, _ = RegisterBlockResults(client, height)
@@ -323,7 +323,7 @@ func (suite *BackendTestSuite) TestGetBlockByHash() {
 			bz,
 			func(hash common.Hash, baseFee sdk.Int, validator sdk.AccAddress, txBz []byte) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, hash, txBz)
 
 				blockRes, _ = RegisterBlockResults(client, height)
@@ -383,7 +383,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByHash() {
 			"fail - block not found",
 			common.BytesToHash(emptyBlock.Hash()),
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, hash, nil)
 			},
 			hexutil.Uint(0),
@@ -394,7 +394,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByHash() {
 			common.BytesToHash(emptyBlock.Hash()),
 			func(hash common.Hash) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHash(client, hash, nil)
 				RegisterBlockResultsError(client, height)
 			},
@@ -406,7 +406,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByHash() {
 			common.BytesToHash(emptyBlock.Hash()),
 			func(hash common.Hash) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHash(client, hash, nil)
 				RegisterBlockResults(client, height)
 			},
@@ -418,7 +418,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByHash() {
 			common.BytesToHash(block.Hash()),
 			func(hash common.Hash) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResults(client, height)
 			},
@@ -458,7 +458,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByNumber() {
 			ethrpc.BlockNumber(emptyBlock.Height),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, height)
 			},
 			hexutil.Uint(0),
@@ -469,7 +469,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByNumber() {
 			ethrpc.BlockNumber(emptyBlock.Height),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, nil)
 				RegisterBlockResultsError(client, height)
 			},
@@ -481,7 +481,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByNumber() {
 			ethrpc.BlockNumber(emptyBlock.Height),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, nil)
 				RegisterBlockResults(client, height)
 			},
@@ -493,7 +493,7 @@ func (suite *BackendTestSuite) TestGetBlockTransactionCountByNumber() {
 			ethrpc.BlockNumber(block.Height),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, bz)
 				RegisterBlockResults(client, height)
 			},
@@ -531,7 +531,7 @@ func (suite *BackendTestSuite) TestTendermintBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, height)
 			},
 			false,
@@ -542,7 +542,7 @@ func (suite *BackendTestSuite) TestTendermintBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockNotFound(client, height)
 			},
 			false,
@@ -570,7 +570,7 @@ func (suite *BackendTestSuite) TestTendermintBlockByNumber() {
 				RegisterParams(queryClient, &header, appHeight)
 
 				tmHeight := appHeight
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, tmHeight, nil)
 			},
 			true,
@@ -581,7 +581,7 @@ func (suite *BackendTestSuite) TestTendermintBlockByNumber() {
 			ethrpc.BlockNumber(0),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, height, nil)
 			},
 			true,
@@ -592,7 +592,7 @@ func (suite *BackendTestSuite) TestTendermintBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, height, nil)
 			},
 			true,
@@ -635,7 +635,7 @@ func (suite *BackendTestSuite) TestTendermintBlockResultByNumber() {
 			"fail",
 			1,
 			func(blockNum int64) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockResultsError(client, blockNum)
 			},
 			false,
@@ -644,7 +644,7 @@ func (suite *BackendTestSuite) TestTendermintBlockResultByNumber() {
 			"pass",
 			1,
 			func(blockNum int64) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockResults(client, blockNum)
 
 				expBlockRes = &tmrpctypes.ResultBlockResults{
@@ -699,7 +699,7 @@ func (suite *BackendTestSuite) TestBlockNumberFromTendermint() {
 			nil,
 			&blockHash,
 			func(hash *common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, *hash, bz)
 			},
 			false,
@@ -709,7 +709,7 @@ func (suite *BackendTestSuite) TestBlockNumberFromTendermint() {
 			nil,
 			&blockHash,
 			func(hash *common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, *hash, bz)
 			},
 			true,
@@ -766,7 +766,7 @@ func (suite *BackendTestSuite) TestBlockNumberFromTendermintByHash() {
 			"fail - tendermint client failed to get block",
 			common.BytesToHash(block.Hash()),
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, hash, bz)
 			},
 			false,
@@ -775,7 +775,7 @@ func (suite *BackendTestSuite) TestBlockNumberFromTendermintByHash() {
 			"pass - block without tx",
 			common.BytesToHash(emptyBlock.Hash()),
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, hash, bz)
 			},
 			true,
@@ -784,7 +784,7 @@ func (suite *BackendTestSuite) TestBlockNumberFromTendermintByHash() {
 			"pass - block with tx",
 			common.BytesToHash(block.Hash()),
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				resBlock, _ = RegisterBlockByHash(client, hash, bz)
 			},
 			true,
@@ -905,7 +905,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			false,
@@ -929,7 +929,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFeeError(queryClient)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			true,
@@ -953,7 +953,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccountError(queryClient)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			true,
@@ -977,7 +977,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParamsError(client, height)
 			},
 			true,
@@ -1007,7 +1007,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			false,
@@ -1031,7 +1031,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			true,
@@ -1055,7 +1055,7 @@ func (suite *BackendTestSuite) TestGetEthBlockFromTendermint() {
 				RegisterBaseFee(queryClient, baseFee)
 				RegisterValidatorAccount(queryClient, validator)
 
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterConsensusParams(client, height)
 			},
 			true,
@@ -1200,7 +1200,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			sdk.NewInt(1).BigInt(),
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, height)
 			},
 			false,
@@ -1211,7 +1211,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			sdk.NewInt(1).BigInt(),
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockNotFound(client, height)
 			},
 			false,
@@ -1222,7 +1222,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			sdk.NewInt(1).BigInt(),
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, nil)
 				RegisterBlockResultsError(client, height)
 			},
@@ -1234,7 +1234,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			nil,
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, height, nil)
 				RegisterBlockResults(client, height)
 
@@ -1249,7 +1249,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			sdk.NewInt(1).BigInt(),
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, height, nil)
 				RegisterBlockResults(client, height)
 
@@ -1264,7 +1264,7 @@ func (suite *BackendTestSuite) TestHeaderByNumber() {
 			sdk.NewInt(1).BigInt(),
 			func(blockNum ethrpc.BlockNumber, baseFee sdk.Int) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlock(client, height, bz)
 				RegisterBlockResults(client, height)
 
@@ -1311,7 +1311,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			common.BytesToHash(block.Hash()),
 			sdk.NewInt(1).BigInt(),
 			func(hash common.Hash, baseFee sdk.Int) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashError(client, hash, bz)
 			},
 			false,
@@ -1321,7 +1321,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			common.BytesToHash(block.Hash()),
 			sdk.NewInt(1).BigInt(),
 			func(hash common.Hash, baseFee sdk.Int) {
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHashNotFound(client, hash, bz)
 			},
 			false,
@@ -1332,7 +1332,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			sdk.NewInt(1).BigInt(),
 			func(hash common.Hash, baseFee sdk.Int) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResultsError(client, height)
 			},
@@ -1344,7 +1344,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			nil,
 			func(hash common.Hash, baseFee sdk.Int) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResults(client, height)
 
@@ -1359,7 +1359,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			sdk.NewInt(1).BigInt(),
 			func(hash common.Hash, baseFee sdk.Int) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlockByHash(client, hash, nil)
 				RegisterBlockResults(client, height)
 
@@ -1374,7 +1374,7 @@ func (suite *BackendTestSuite) TestHeaderByHash() {
 			sdk.NewInt(1).BigInt(),
 			func(hash common.Hash, baseFee sdk.Int) {
 				height := int64(1)
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				expResultBlock, _ = RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResults(client, height)
 
@@ -1418,7 +1418,7 @@ func (suite *BackendTestSuite) TestEthBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlockError(client, height)
 			},
 			nil,
@@ -1429,7 +1429,7 @@ func (suite *BackendTestSuite) TestEthBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, nil)
 				RegisterBlockResultsError(client, blockNum.Int64())
 			},
@@ -1441,7 +1441,7 @@ func (suite *BackendTestSuite) TestEthBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, nil)
 
 				RegisterBlockResults(client, blockNum.Int64())
@@ -1467,7 +1467,7 @@ func (suite *BackendTestSuite) TestEthBlockByNumber() {
 			ethrpc.BlockNumber(1),
 			func(blockNum ethrpc.BlockNumber) {
 				height := blockNum.Int64()
-				client := suite.backend.clientCtx.Client.(*mocks.Client)
+				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
 				RegisterBlock(client, height, bz)
 
 				RegisterBlockResults(client, blockNum.Int64())
