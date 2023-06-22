@@ -210,7 +210,7 @@ async function main() {
 
   console.log(`Running Tests: ${allTests.join()}`);
 
-  const proc = await setupNetwork({ runConfig, timeout: 50000 });
+  const proc = await setupNetwork({ runConfig, timeout: 120000 });
   await performTests({ allTests, runConfig });
 
   if (proc) {
