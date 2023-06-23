@@ -22,27 +22,31 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 
-	// "github.com/cosmos/cosmos-sdk/client"
+	tmhttp "github.com/cometbft/cometbft/rpc/client/http"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/types"
 	ethlog "github.com/ethereum/go-ethereum/log"
 	ethrpc "github.com/ethereum/go-ethereum/rpc"
 	"github.com/evmos/ethermint/rpc"
 
-	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/server/config"
 	ethermint "github.com/evmos/ethermint/types"
 )
 
 // StartJSONRPC starts the JSON-RPC server
 func StartJSONRPC(ctx *server.Context,
-	clientCtx cosmosclientext.Context,
+	clientCtx client.Context,
 	tmRPCAddr,
 	tmEndpoint string,
 	config *config.Config,
 	indexer ethermint.EVMTxIndexer,
 ) (*http.Server, chan struct{}, error) {
 	tmWsClient := ConnectTmWS(tmRPCAddr, tmEndpoint, ctx.Logger)
+	tmRPCClient, err := tmhttp.New(tmRPCAddr, tmEndpoint)
+	if err != nil {
+		panic(err)
+	}
 
 	logger := ctx.Logger.With("module", "geth")
 	ethlog.Root().SetHandler(ethlog.FuncHandler(func(r *ethlog.Record) error {
@@ -62,7 +66,7 @@ func StartJSONRPC(ctx *server.Context,
 	allowUnprotectedTxs := config.JSONRPC.AllowUnprotectedTxs
 	rpcAPIArr := config.JSONRPC.API
 
-	apis := rpc.GetRPCAPIs(ctx, clientCtx, tmWsClient, allowUnprotectedTxs, indexer, rpcAPIArr)
+	apis := rpc.GetRPCAPIs(ctx, clientCtx, tmWsClient, tmRPCClient, allowUnprotectedTxs, indexer, rpcAPIArr)
 
 	for _, api := range apis {
 		if err := rpcServer.RegisterName(api.Namespace, api.Service); err != nil {

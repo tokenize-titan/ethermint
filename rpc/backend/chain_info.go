@@ -111,7 +111,7 @@ func (b *Backend) CurrentHeader() *ethtypes.Header {
 // PendingTransactions returns the transactions that are in the transaction pool
 // and have a from address that is one of the accounts this node manages.
 func (b *Backend) PendingTransactions() ([]*sdk.Tx, error) {
-	res, err := b.clientCtx.RPCClient.UnconfirmedTxs(b.ctx, nil)
+	res, err := b.tmRPC.UnconfirmedTxs(b.ctx, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -95,14 +95,14 @@ func startInProcess(cfg Config, val *Validator) error {
 			WithClient(val.RPCClient)
 
 		// Add the tx service in the gRPC router.
-		app.RegisterTxService(val.ClientCtx.Context)
+		app.RegisterTxService(val.ClientCtx)
 
 		// Add the tendermint queries service in the gRPC router.
-		app.RegisterTendermintService(val.ClientCtx.Context)
+		app.RegisterTendermintService(val.ClientCtx)
 	}
 
 	if val.AppConfig.API.Enable && val.APIAddress != "" {
-		apiSrv := api.New(val.ClientCtx.Context, logger.With("module", "api-server"))
+		apiSrv := api.New(val.ClientCtx, logger.With("module", "api-server"))
 		app.RegisterAPIRoutes(apiSrv, val.AppConfig.API)
 
 		errCh := make(chan error)
@@ -123,7 +123,7 @@ func startInProcess(cfg Config, val *Validator) error {
 	}
 
 	if val.AppConfig.GRPC.Enable {
-		grpcSrv, err := servergrpc.StartGRPCServer(val.ClientCtx.Context, app, val.AppConfig.GRPC)
+		grpcSrv, err := servergrpc.StartGRPCServer(val.ClientCtx, app, val.AppConfig.GRPC)
 		if err != nil {
 			return err
 		}

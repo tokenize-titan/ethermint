@@ -64,7 +64,6 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	appparams "github.com/evmos/ethermint/app/params"
 
-	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/crypto/hd"
 	"github.com/evmos/ethermint/encoding"
 	"github.com/evmos/ethermint/server/config"
@@ -177,7 +176,7 @@ type (
 	// or handler.
 	Validator struct {
 		AppConfig     *config.Config
-		ClientCtx     cosmosclientext.Context
+		ClientCtx     client.Context
 		Ctx           *server.Context
 		Dir           string
 		NodeID        string
@@ -498,7 +497,7 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 		}
 
 		// TODO : missing `WithRPCClient`
-		clientCtx := cosmosclientext.Context{}.
+		clientCtx := client.Context{}.
 			WithKeyringDir(clientDir).
 			WithKeyring(kb).
 			WithHomeDir(tmCfg.RootDir).

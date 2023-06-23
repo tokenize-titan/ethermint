@@ -55,7 +55,7 @@ func (suite *BackendTestSuite) TestSendTransaction() {
 			func() {
 				var header metadata.MD
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				armor := crypto.EncryptArmorPrivKey(priv, "", "eth_secp256k1")
 				suite.backend.clientCtx.Keyring.ImportPrivKey("test_key", armor, "")
 				RegisterParams(queryClient, &header, 1)
@@ -70,7 +70,7 @@ func (suite *BackendTestSuite) TestSendTransaction() {
 			func() {
 				var header metadata.MD
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				armor := crypto.EncryptArmorPrivKey(priv, "", "eth_secp256k1")
 				suite.backend.clientCtx.Keyring.ImportPrivKey("test_key", armor, "")
 				RegisterParams(queryClient, &header, 1)
@@ -93,7 +93,7 @@ func (suite *BackendTestSuite) TestSendTransaction() {
 			func() {
 				var header metadata.MD
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				armor := crypto.EncryptArmorPrivKey(priv, "", "eth_secp256k1")
 				suite.backend.clientCtx.Keyring.ImportPrivKey("test_key", armor, "")
 				RegisterParams(queryClient, &header, 1)
@@ -118,7 +118,7 @@ func (suite *BackendTestSuite) TestSendTransaction() {
 			func() {
 				var header metadata.MD
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				armor := crypto.EncryptArmorPrivKey(priv, "", "eth_secp256k1")
 				suite.backend.clientCtx.Keyring.ImportPrivKey("test_key", armor, "")
 				RegisterParams(queryClient, &header, 1)

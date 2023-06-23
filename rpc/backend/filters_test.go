@@ -29,7 +29,7 @@ func (suite *BackendTestSuite) TestGetLogs() {
 		{
 			"fail - no block with that hash",
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockByHashNotFound(client, hash, bz)
 			},
 			common.Hash{},
@@ -39,7 +39,7 @@ func (suite *BackendTestSuite) TestGetLogs() {
 		{
 			"fail - error fetching block by hash",
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockByHashError(client, hash, bz)
 			},
 			common.Hash{},
@@ -49,7 +49,7 @@ func (suite *BackendTestSuite) TestGetLogs() {
 		{
 			"fail - error getting block results",
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResultsError(client, 1)
 			},
@@ -60,7 +60,7 @@ func (suite *BackendTestSuite) TestGetLogs() {
 		{
 			"success - getting logs with block hash",
 			func(hash common.Hash) {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockByHash(client, hash, bz)
 				RegisterBlockResultsWithEventLog(client, ethrpc.BlockNumber(1).Int64())
 			},

@@ -170,7 +170,7 @@ func (suite *BackendTestSuite) TestSyncing() {
 		{
 			"fail - Can't get status",
 			func() {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterStatusError(client)
 			},
 			false,
@@ -179,7 +179,7 @@ func (suite *BackendTestSuite) TestSyncing() {
 		{
 			"pass - Node not catching up",
 			func() {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterStatus(client)
 			},
 			false,
@@ -188,7 +188,7 @@ func (suite *BackendTestSuite) TestSyncing() {
 		{
 			"pass - Node is catching up",
 			func() {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterStatus(client)
 				status, _ := client.Status(suite.backend.ctx)
 				status.SyncInfo.CatchingUp = true
@@ -228,7 +228,7 @@ func (suite *BackendTestSuite) TestSetEtherbase() {
 		{
 			"pass - Failed to get coinbase address",
 			func() {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterStatusError(client)
 			},
 			common.Address{},
@@ -237,7 +237,7 @@ func (suite *BackendTestSuite) TestSetEtherbase() {
 		{
 			"pass - the minimum fee is not set",
 			func() {
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterStatus(client)
 				RegisterValidatorAccount(queryClient, suite.acc)
@@ -249,7 +249,7 @@ func (suite *BackendTestSuite) TestSetEtherbase() {
 			"fail - error querying for account ",
 			func() {
 				var header metadata.MD
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterStatus(client)
 				RegisterValidatorAccount(queryClient, suite.acc)
@@ -275,7 +275,7 @@ func (suite *BackendTestSuite) TestSetEtherbase() {
 		//{
 		//	"pass - set the etherbase for the miner",
 		//	func() {
-		//		client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+		//		client := suite.backend.clientCtx.Client.(*mocks.Client)
 		//		queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 		//		RegisterStatus(client)
 		//		RegisterValidatorAccount(queryClient, suite.acc)

@@ -81,7 +81,7 @@ func (suite *BackendTestSuite) TestTraceTransaction() {
 			"fail - block not found",
 			func() {
 				// var header metadata.MD
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockError(client, 1)
 			},
 			&types.Block{Header: types.Header{Height: 1}, Data: types.Data{Txs: []types.Tx{txBz}}},
@@ -107,7 +107,7 @@ func (suite *BackendTestSuite) TestTraceTransaction() {
 			"pass - transaction found in a block with multiple transactions",
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockMultipleTxs(client, 1, []types.Tx{txBz, txBz2})
 				RegisterTraceTransactionWithPredecessors(queryClient, msgEthereumTx, []*evmtypes.MsgEthereumTx{msgEthereumTx})
 			},
@@ -147,7 +147,7 @@ func (suite *BackendTestSuite) TestTraceTransaction() {
 			"pass - transaction found",
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlock(client, 1, txBz)
 				RegisterTraceTransaction(queryClient, msgEthereumTx)
 			},
@@ -178,7 +178,7 @@ func (suite *BackendTestSuite) TestTraceTransaction() {
 			tc.registerMock()
 
 			db := dbm.NewMemDB()
-			suite.backend.indexer = indexer.NewKVIndexer(db, tmlog.NewNopLogger(), suite.backend.clientCtx.Context)
+			suite.backend.indexer = indexer.NewKVIndexer(db, tmlog.NewNopLogger(), suite.backend.clientCtx)
 
 			err := suite.backend.indexer.IndexBlock(tc.block, tc.responseBlock)
 			suite.Require().NoError(err)
@@ -224,7 +224,7 @@ func (suite *BackendTestSuite) TestTraceBlock() {
 			func() {
 				queryClient := suite.backend.queryClient.QueryClient.(*mocks.EVMQueryClient)
 				RegisterTraceBlock(queryClient, []*evmtypes.MsgEthereumTx{msgEthTx})
-				client := suite.backend.clientCtx.RPCClient.(*mocks.Client)
+				client := suite.backend.clientCtx.Client.(*mocks.Client)
 				RegisterBlockResults(client, 1)
 			},
 			[]*evmtypes.TxTraceResult{},

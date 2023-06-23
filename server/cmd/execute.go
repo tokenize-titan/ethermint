@@ -10,8 +10,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/server"
-
-	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 )
 
 // Execute executes the root command of an application. It handles creating a
@@ -38,9 +36,7 @@ func Execute(rootCmd *cobra.Command, envPrefix string, defaultHome string) error
 // values initialized.
 func CreateExecuteContext(ctx context.Context) context.Context {
 	srvCtx := server.NewDefaultContext()
-	ctx = context.WithValue(ctx, cosmosclientext.ClientContextKey, &cosmosclientext.Context{})
-	cosmosclientcontext := cosmosclientext.Context{}.Context
-	ctx = context.WithValue(ctx, client.ClientContextKey, &cosmosclientcontext)
+	ctx = context.WithValue(ctx, client.ClientContextKey, &client.Context{})
 	ctx = context.WithValue(ctx, server.ServerContextKey, srvCtx)
 
 	return ctx

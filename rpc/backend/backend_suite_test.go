@@ -19,7 +19,6 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	"github.com/evmos/ethermint/app"
-	cosmosclientext "github.com/evmos/ethermint/cosmos_client_ext"
 	"github.com/evmos/ethermint/crypto/ethsecp256k1"
 	"github.com/evmos/ethermint/crypto/hd"
 	"github.com/evmos/ethermint/encoding"
@@ -70,7 +69,7 @@ func (suite *BackendTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 
 	encodingConfig := encoding.MakeConfig(app.ModuleBasics)
-	clientCtx := cosmosclientext.Context{}.WithChainID(ChainID).
+	clientCtx := client.Context{}.WithChainID(ChainID).
 		WithHeight(1).
 		WithTxConfig(encodingConfig.TxConfig).
 		WithKeyringDir(clientDir).
@@ -78,12 +77,12 @@ func (suite *BackendTestSuite) SetupTest() {
 		WithAccountRetriever(client.TestAccountRetriever{Accounts: accounts})
 
 	allowUnprotectedTxs := false
-	idxer := indexer.NewKVIndexer(dbm.NewMemDB(), ctx.Logger, clientCtx.Context)
+	idxer := indexer.NewKVIndexer(dbm.NewMemDB(), ctx.Logger, clientCtx)
 
-	suite.backend = NewBackend(ctx, ctx.Logger, clientCtx, allowUnprotectedTxs, idxer)
+	suite.backend = NewBackend(ctx, ctx.Logger, clientCtx, nil, allowUnprotectedTxs, idxer)
 	suite.backend.queryClient.QueryClient = mocks.NewEVMQueryClient(suite.T())
-	suite.backend.clientCtx.RPCClient = mocks.NewClient(suite.T())
-	suite.backend.clientCtx.Client = suite.backend.clientCtx.RPCClient
+	suite.backend.tmRPC = mocks.NewClient(suite.T())
+	suite.backend.clientCtx.Client = suite.backend.tmRPC
 	suite.backend.queryClient.FeeMarket = mocks.NewFeeMarketQueryClient(suite.T())
 	suite.backend.ctx = rpctypes.ContextWithHeight(1)
 
