@@ -33,6 +33,8 @@ echo $USER2_MNEMONIC | ethermintd keys add $USER2_KEY --recover --keyring-backen
 echo $USER3_MNEMONIC | ethermintd keys add $USER3_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 echo $USER4_MNEMONIC | ethermintd keys add $USER4_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 
+pkill -9 ethermintd
+
 ethermintd init $MONIKER --chain-id $CHAINID
 
 # Set gas limit in genesis

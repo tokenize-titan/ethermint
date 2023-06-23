@@ -22,7 +22,7 @@ const { DEFAULT_STAKE_AMOUNT, DEFAULT_LOCK_AMOUNT, EMPTY_DATA, ZERO_ADDRESS } = 
 contract('Staking app, Locking funds flows', ([_, owner, user1, user2, user3]) => {
   let staking, lockManager, users, managers, token
 
-  beforeEach(async () => {
+  beforeEach(async () => {    
     const deployment = await deploy(owner)
     staking = deployment.staking
     lockManager = deployment.lockManager
@@ -32,11 +32,13 @@ contract('Staking app, Locking funds flows', ([_, owner, user1, user2, user3]) =
     // fund users and create user state objects
     users = []
     const userAddresses = [user1, user2, user3]
-    await Promise.all(userAddresses.map(async (userAddress, index) => {
-      const amount = DEFAULT_STAKE_AMOUNT.mul(bn(userAddresses.length - index))
+
+    for( let i = 0; i < userAddresses.length; i++){
+      const userAddress = userAddresses[i]
+      const amount = DEFAULT_STAKE_AMOUNT.mul(bn(userAddresses.length - i))
       users.push(new UserState(userAddress, amount))
       await token.transfer(userAddress, amount, { from: owner })
-    }))
+    }
 
     // managers
     managers = users.reduce((result, user) => {

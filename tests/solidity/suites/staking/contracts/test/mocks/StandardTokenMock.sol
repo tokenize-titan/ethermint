@@ -1,6 +1,6 @@
 // Copied from https://github.com/OpenZeppelin/openzeppelin-solidity/blob/a9f910d34f0ab33a1ae5e714f69f9596a02b4d91/contracts/token/ERC20/StandardToken.sol
 
-pragma solidity 0.5.17;
+pragma solidity ^0.5.17;
 
 import "../../lib/os/ERC20.sol";
 import "../../lib/os/SafeMath.sol";

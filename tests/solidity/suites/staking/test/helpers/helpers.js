@@ -185,17 +185,19 @@ module.exports = (artifacts) => {
   // check that users can’t unlock more than locked balance
   const checkOverUnlocking = async ({ staking, users, managers }) => {
     await Promise.all(
-      users.map(async (user) => await Promise.all(
-        managers.map(async (manager) => {
-          const lock = await staking.getLock(user.address, manager)
-          // const errorMessage = lock._allowance.gt(bn(0)) ? STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK : STAKING_ERRORS.ERROR_LOCK_DOES_NOT_EXIST
-          await assertRevert(
-            staking.unlock(user.address, manager, user.lockedBalance.add(bn(1)), { from: user.address })/*,
-            errorMessage
-            */
-          )
-        })
-      ))
+      users.map(async (user) => {
+          for (let i = 0; i < managers.length ; i++) {
+            let manager = managers[i];
+            const lock = await staking.getLock(user.address, manager)
+            // const errorMessage = lock._allowance.gt(bn(0)) ? STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK : STAKING_ERRORS.ERROR_LOCK_DOES_NOT_EXIST
+            await assertRevert(
+              staking.unlock(user.address, manager, user.lockedBalance.add(bn(1)), { from: user.address })/*,
+              errorMessage
+              */
+            )
+          }
+        }        
+      )
     )
   }
 
