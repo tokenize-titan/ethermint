@@ -22,14 +22,14 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 
-	tmhttp "github.com/cometbft/cometbft/rpc/client/http"
+	tmrpc "github.com/cometbft/cometbft/rpc/client"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/types"
 	ethlog "github.com/ethereum/go-ethereum/log"
 	ethrpc "github.com/ethereum/go-ethereum/rpc"
-	"github.com/evmos/ethermint/rpc"
 
+	"github.com/evmos/ethermint/rpc"
 	"github.com/evmos/ethermint/server/config"
 	ethermint "github.com/evmos/ethermint/types"
 )
@@ -37,16 +37,13 @@ import (
 // StartJSONRPC starts the JSON-RPC server
 func StartJSONRPC(ctx *server.Context,
 	clientCtx client.Context,
+	tmRPCClient tmrpc.Client,
 	tmRPCAddr,
 	tmEndpoint string,
 	config *config.Config,
 	indexer ethermint.EVMTxIndexer,
 ) (*http.Server, chan struct{}, error) {
 	tmWsClient := ConnectTmWS(tmRPCAddr, tmEndpoint, ctx.Logger)
-	tmRPCClient, err := tmhttp.New(tmRPCAddr, tmEndpoint)
-	if err != nil {
-		panic(err)
-	}
 
 	logger := ctx.Logger.With("module", "geth")
 	ethlog.Root().SetHandler(ethlog.FuncHandler(func(r *ethlog.Record) error {

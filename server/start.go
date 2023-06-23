@@ -43,7 +43,6 @@ import (
 	"github.com/cometbft/cometbft/p2p"
 	pvm "github.com/cometbft/cometbft/privval"
 	"github.com/cometbft/cometbft/proxy"
-	tmhttp "github.com/cometbft/cometbft/rpc/client/http"
 	"github.com/cometbft/cometbft/rpc/client/local"
 
 	"cosmossdk.io/tools/rosetta"
@@ -369,6 +368,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		logger.Info("starting node in query only mode; Tendermint is disabled")
 		config.GRPC.Enable = true
 		config.JSONRPC.EnableIndexer = false
+		config.JSONRPC.Enable = false
 	} else {
 		logger.Info("starting node with ABCI Tendermint in-process")
 
@@ -403,8 +403,11 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 	// service if API or gRPC or JSONRPC is enabled, and avoid doing so in the general
 	// case, because it spawns a new local tendermint RPC client.
 
+	var tmRPCClient *local.Local
+
 	if (config.API.Enable || config.GRPC.Enable || config.JSONRPC.Enable || config.JSONRPC.EnableIndexer) && tmNode != nil {
-		clientCtx = clientCtx.WithClient(local.New(tmNode))
+		tmRPCClient = local.New(tmNode)
+		clientCtx = clientCtx.WithClient(tmRPCClient)
 
 		app.RegisterTxService(clientCtx)
 		app.RegisterTendermintService(clientCtx)
@@ -431,13 +434,6 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		if err != nil {
 			logger.Error("failed to open evm indexer DB", "error", err.Error())
 			return err
-		}
-		tmEndpoint := "/websocket"
-		tmRPCAddr := cfg.RPC.ListenAddress
-
-		tmRPCClient, err := tmhttp.New(tmRPCAddr, tmEndpoint)
-		if err != nil {
-			panic(err)
 		}
 
 		idxLogger := ctx.Logger.With("indexer", "evm")
@@ -577,7 +573,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		// TODO: (workaround) for some reason `tests/solidity/test-helper.js` not detect output stream
 		// 				add println to workaround that bug
 		println("Starting JSON-RPC server")
-		httpSrv, httpSrvDone, err = StartJSONRPC(ctx, clientCtx, tmRPCAddr, tmEndpoint, &config, idxer)
+		httpSrv, httpSrvDone, err = StartJSONRPC(ctx, clientCtx, tmRPCClient, tmRPCAddr, tmEndpoint, &config, idxer)
 		if err != nil {
 			return err
 		}
