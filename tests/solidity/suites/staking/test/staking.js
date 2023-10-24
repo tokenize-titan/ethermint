@@ -33,7 +33,16 @@ contract('Staking app', ([owner, other]) => {
   })
 
   it('fails deploying if token is not a contract', async() => {
-    await assertRevert(StakingMock.new(owner)/*, STAKING_ERRORS.ERROR_TOKEN_NOT_CONTRACT*/)
+
+    //await assertRevert(StakingMock.new(owner)/*, STAKING_ERRORS.ERROR_TOKEN_NOT_CONTRACT*/)
+
+    try{
+      await StakingMock.new(owner)
+      assert.fail("should have failed")
+    }
+    catch(error){
+      assert.equal(error.reason, STAKING_ERRORS.ERROR_TOKEN_NOT_CONTRACT)
+    }    
   })
 
   it('stakes', async () => {
