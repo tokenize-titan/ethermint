@@ -7,6 +7,7 @@ module.exports = {
       network_id: "*",       // Any network (default: none)
       gas: 7000000,          // Gas sent with each transaction
       gasPrice: 1000000000,  // 1 gwei (in wei)
+      networkCheckTimeout: 1000000,
     },
   },
   compilers: {
