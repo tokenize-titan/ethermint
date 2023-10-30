@@ -24,6 +24,7 @@ USER4_KEY="user4"
 USER4_MNEMONIC="doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch"
 
 # remove existing daemon and client
+pkill -9 ethermintd
 rm -rf ~/.ethermint*
 
 # Import keys from mnemonics
@@ -33,7 +34,6 @@ echo $USER2_MNEMONIC | ethermintd keys add $USER2_KEY --recover --keyring-backen
 echo $USER3_MNEMONIC | ethermintd keys add $USER3_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 echo $USER4_MNEMONIC | ethermintd keys add $USER4_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 
-pkill -9 ethermintd
 
 ethermintd init $MONIKER --chain-id $CHAINID
 
