@@ -72,4 +72,4 @@ ethermintd collect-gentxs
 ethermintd validate-genesis
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-ethermintd start --metrics --pruning=nothing --rpc.unsafe --keyring-backend test --log_level info --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable
+ethermintd start --metrics --pruning=nothing --rpc.unsafe --keyring-backend test --log_level "geth:info,*:error" --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable

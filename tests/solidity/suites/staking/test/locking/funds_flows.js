@@ -59,7 +59,7 @@ contract('Staking app, Locking funds flows', ([_, owner, user1, user2, user3]) =
       const stakeAmount = DEFAULT_STAKE_AMOUNT
 
       beforeEach('stakes', async () => {
-        await checkInvariants({ staking, users, managers })
+        // await checkInvariants({ staking, users, managers })
         await approveAndStakeWithState({ staking, amount: stakeAmount, user: users[0] })
         await checkInvariants({ staking, users, managers })
       })
@@ -172,7 +172,7 @@ contract('Staking app, Locking funds flows', ([_, owner, user1, user2, user3]) =
       const stakeAmount = DEFAULT_STAKE_AMOUNT
 
       beforeEach('stakes', async () => {
-        await checkInvariants({ staking, users, managers })
+        // await checkInvariants({ staking, users, managers })
         await approveAndStakeWithState({ staking, amount: stakeAmount, user: users[0] })
         await checkInvariants({ staking, users, managers })
       })

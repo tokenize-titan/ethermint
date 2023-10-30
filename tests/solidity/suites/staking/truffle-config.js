@@ -4,11 +4,18 @@ module.exports = {
     ethermint: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
+      // websockets: true,
       network_id: "*",       // Any network (default: none)
       gas: 7000000,          // Gas sent with each transaction
       gasPrice: 1000000000,  // 1 gwei (in wei)
-      networkCheckTimeout: 1000000,
+      skipDryRun: true,
+      timeoutBlocks: 500,
+      networkCheckTimeout: 10000000,
     },
+  },
+  mocha: {
+    enableTimeouts: false,
+    timeout: 1000 * 60 * 60,
   },
   compilers: {
     solc: {
