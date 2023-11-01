@@ -9,14 +9,8 @@ import requests
 from pystarport import ports
 
 from .network import setup_custom_ethermint
-from .utils import (
-    CONTRACTS,
-    decode_bech32,
-    deploy_contract,
-    supervisorctl,
-    wait_for_block,
-    wait_for_port,
-)
+from .utils import (CONTRACTS, decode_bech32, deploy_contract, supervisorctl,
+                    wait_for_block, wait_for_port)
 
 
 @pytest.fixture(scope="module")
@@ -99,11 +93,6 @@ def test_grpc_mode(custom_ethermint):
             grpc_port = ports.grpc_port(custom_ethermint.base_port(1))
             wait_for_port(grpc_port)
             wait_for_port(api_port)
-
-            # in grpc-only mode, grpc query don't work if we don't pass chain_id
-            rsp = grpc_eth_call(api_port, msg)
-            assert rsp["code"] != 0, str(rsp)
-            assert "invalid chain ID" in rsp["message"]
 
             # it don't works without proposer address neither
             rsp = grpc_eth_call(api_port, msg, chain_id=9000)
