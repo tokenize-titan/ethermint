@@ -15,7 +15,7 @@ module.exports = {
   },
   mocha: {
     enableTimeouts: false,
-    timeout: 1000 * 60 * 60,
+    timeout: 1000 * 60 * 90,
   },
   compilers: {
     solc: {
