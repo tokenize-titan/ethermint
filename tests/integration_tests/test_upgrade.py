@@ -128,7 +128,7 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
     assert rsp["code"] == 0, rsp["raw_log"]
 
     print("wait for two new blocks, so the sent txs are all included")
-    wait_for_new_blocks(cli, 2)
+    wait_for_new_blocks(cli, 4)
 
     propose_result = cli.tx(rsp["txhash"])
 
