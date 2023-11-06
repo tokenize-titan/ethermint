@@ -5,7 +5,10 @@ let
     pname = "ethermintd";
     version = "v0.22.0-t.1";
     # src = fetchEthermint "d29cdad6e667f6089dfecbedd36bb8d3a2a7d025";
-    src = ../../../.;
+    src = pkgs.lib.sourceByRegex ../../../. [
+      "^(x|app|cmd|client|server|crypto|rpc|types|encoding|ethereum|indexer|testutil|version|go.mod|go.sum|gomod2nix.toml)($|/.*)"
+      "^tests(/.*[.]go)?$"
+    ];
     pwd = src;
     # modules = gomod2nix.toml;
     subPackages = [ "cmd/ethermintd" ];

@@ -70,6 +70,16 @@
               },
             ],
           },
+          params: {
+            max_deposit_period: '10s',
+            voting_period: '10s',
+            min_deposit: [
+              {
+                denom: 'aphoton',
+                amount: '1',
+              },
+            ],
+          },
         },
         transfer: {
           params: {
