@@ -7,14 +7,8 @@ from hexbytes import HexBytes
 from web3.datastructures import AttributeDict
 
 from .network import setup_custom_ethermint
-from .utils import (
-    ADDRS,
-    CONTRACTS,
-    KEYS,
-    deploy_contract,
-    sign_transaction,
-    w3_wait_for_new_blocks,
-)
+from .utils import (ADDRS, CONTRACTS, KEYS, deploy_contract, sign_transaction,
+                    w3_wait_for_new_blocks)
 
 
 @pytest.fixture(scope="module")
@@ -78,7 +72,7 @@ def test_pruned_node(pruned):
     )
     assert "error" in pruned_res
     assert (
-        pruned_res["error"]["message"] == "couldn't fetch balance. Node state is pruned"
+        "Version has either been pruned, or is for a future block height" in pruned_res["error"]["message"]
     )
 
     with pytest.raises(Exception):

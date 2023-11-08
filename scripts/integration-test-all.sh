@@ -61,6 +61,12 @@ if [[ ! "$DATA_DIR" ]]; then
     exit 1
 fi
 
+# check jq is installed
+if ! [ -x "$(command -v jq)" ]; then
+    echo "jq not installed, please install it"
+    exit 1
+fi
+
 # Compile ethermint
 echo "compiling ethermint"
 make build

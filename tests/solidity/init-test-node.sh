@@ -24,6 +24,7 @@ USER4_KEY="user4"
 USER4_MNEMONIC="doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch"
 
 # remove existing daemon and client
+pkill -9 ethermintd
 rm -rf ~/.ethermint*
 
 # Import keys from mnemonics
@@ -32,6 +33,7 @@ echo $USER1_MNEMONIC | ethermintd keys add $USER1_KEY --recover --keyring-backen
 echo $USER2_MNEMONIC | ethermintd keys add $USER2_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 echo $USER3_MNEMONIC | ethermintd keys add $USER3_KEY --recover --keyring-backend test --algo "eth_secp256k1"
 echo $USER4_MNEMONIC | ethermintd keys add $USER4_KEY --recover --keyring-backend test --algo "eth_secp256k1"
+
 
 ethermintd init $MONIKER --chain-id $CHAINID
 
@@ -70,4 +72,4 @@ ethermintd collect-gentxs
 ethermintd validate-genesis
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-ethermintd start --metrics --pruning=nothing --rpc.unsafe --keyring-backend test --log_level info --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable
+ethermintd start --metrics --pruning=nothing --rpc.unsafe --keyring-backend test --log_level "geth:info,*:error" --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable

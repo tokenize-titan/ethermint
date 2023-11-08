@@ -45,6 +45,14 @@ ethermint_9000-1:
           min_deposit:
             - denom: "aphoton"
               amount: "1"
+        params:
+          voting_period: "10s"
+          max_deposit_period: "10s"
+          min_deposit:
+            - denom: "aphoton"
+              amount: "1"
+
+
       transfer:
         params:
           receive_enabled: true

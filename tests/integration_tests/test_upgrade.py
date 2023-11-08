@@ -10,16 +10,9 @@ from pystarport import ports
 from pystarport.cluster import SUPERVISOR_CONFIG_FILE
 
 from .network import Ethermint, setup_custom_ethermint
-from .utils import (
-    ADDRS,
-    CONTRACTS,
-    deploy_contract,
-    parse_events,
-    send_transaction,
-    wait_for_block,
-    wait_for_block_time,
-    wait_for_port,
-)
+from .utils import (ADDRS, CONTRACTS, deploy_contract, parse_events,
+                    send_transaction, wait_for_block, wait_for_block_time,
+                    wait_for_new_blocks, wait_for_port)
 
 
 def init_cosmovisor(home):
@@ -93,6 +86,16 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
     """
     cli = custom_ethermint.cosmos_cli()
 
+    chain_binary = custom_ethermint.chain_binary
+    print("chain_binary", chain_binary)
+    # calculate checksum sha256
+    cmd = ["nix-hash", "--type", "sha256", "--flat", chain_binary]
+    print(*cmd)
+    checksum = subprocess.run(cmd, check=True, capture_output=True).stdout.decode()
+    print("checksum", checksum)
+    # remove control characters
+    checksum = checksum.strip().replace("\n", "")
+
     w3 = custom_ethermint.w3
     contract, _ = deploy_contract(w3, CONTRACTS["TestERC20A"])
     old_height = w3.eth.block_number
@@ -105,6 +108,11 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
     print("upgrade height", target_height)
 
     plan_name = "integration-test-upgrade"
+    upgrade_info = {
+        "binaries": {
+            "any": f"file://{chain_binary}?checksum=sha256:{checksum}",
+        }
+    }
     rsp = cli.gov_propose(
         "community",
         "software-upgrade",
@@ -114,19 +122,34 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
             "description": "ditto",
             "upgrade-height": target_height,
             "deposit": "10000aphoton",
+            "upgrade-info": json.dumps(upgrade_info),
         },
     )
     assert rsp["code"] == 0, rsp["raw_log"]
 
+    print("wait for two new blocks, so the sent txs are all included")
+    wait_for_new_blocks(cli, 4)
+
+    propose_result = cli.tx(rsp["txhash"])
+
+    assert propose_result["code"] == 0, propose_result["raw_log"]
+
     # get proposal_id
-    ev = parse_events(rsp["logs"])["submit_proposal"]
-    proposal_id = ev["proposal_id"]
+
+    ev = parse_events(propose_result["logs"])
+    # print(ev)
+    ev_submit_proposal = ev["submit_proposal"]
+    # print(ev_submit_proposal)
+    proposal_id = ev_submit_proposal["proposal_id"]
+    print("proposal_id", proposal_id)
 
     rsp = cli.gov_vote("validator", proposal_id, "yes")
     assert rsp["code"] == 0, rsp["raw_log"]
     # rsp = custom_ethermint.cosmos_cli(1).gov_vote("validator", proposal_id, "yes")
     # assert rsp["code"] == 0, rsp["raw_log"]
 
+    proposal = cli.query_proposal(proposal_id)
+    wait_for_block_time(cli, isoparse(proposal["deposit_end_time"]))
     proposal = cli.query_proposal(proposal_id)
     wait_for_block_time(cli, isoparse(proposal["voting_end_time"]))
     proposal = cli.query_proposal(proposal_id)

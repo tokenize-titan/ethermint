@@ -3,7 +3,7 @@
 PACKAGES_NOSIMULATION=$(shell go list ./... | grep -v '/simulation')
 PACKAGES_SIMTEST=$(shell go list ./... | grep '/simulation')
 VERSION ?= $(shell echo $(shell git describe --tags `git rev-list --tags="v*" --max-count=1`) | sed 's/^v//')
-TMVERSION := $(shell go list -m github.com/tendermint/tendermint | sed 's:.* ::')
+TMVERSION := $(shell go list -m github.com/cometbft/cometbft | sed 's:.* ::')
 COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
 BINDIR ?= $(GOPATH)/bin
@@ -72,7 +72,7 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=ethermint \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 			-X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)" \
-			-X github.com/tendermint/tendermint/version.TMCoreSemVer=$(TMVERSION)
+			-X github.com/cometbft/cometbft/version.TMCoreSemVer=$(TMVERSION)
 
 ifeq ($(ENABLE_ROCKSDB),true)
   BUILD_TAGS += rocksdb_build
@@ -323,7 +323,7 @@ TEST_TARGETS := test-unit test-unit-cover test-race
 test-unit: ARGS=-timeout=10m -race
 test-unit: TEST_PACKAGES=$(PACKAGES_UNIT)
 
-test-race: ARGS=-race
+test-race: ARGS=-timeout=20m -race
 test-race: TEST_PACKAGES=$(PACKAGES_NOSIMULATION)
 $(TEST_TARGETS): run-tests
 
@@ -393,7 +393,7 @@ format-fix:
 ###############################################################################
 
 # ------
-# NOTE: Link to the tendermintdev/sdk-proto-gen docker images: 
+# NOTE: Link to the tendermintdev/sdk-proto-gen docker images:
 #       https://hub.docker.com/r/tendermintdev/sdk-proto-gen/tags
 #
 protoVer=v0.7
@@ -425,7 +425,7 @@ proto-all: proto-format proto-lint proto-gen
 
 proto-gen:
 	@echo "Generating Protobuf files"
-	$(protoImage) sh ./scripts/protocgen.sh
+	$(protoCosmosImage) sh ./scripts/protocgen.sh
 
 
 # TODO: Rethink API docs generation

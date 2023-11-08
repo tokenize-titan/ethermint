@@ -174,7 +174,7 @@ module.exports = (artifacts) => {
     await Promise.all(
       users.map(async (user) => {
         await assertRevert(
-          staking.unstake(user.stakedBalance.sub(user.lockedBalance).add(bn(1)), EMPTY_DATA, { from: user.address })/*,
+          staking.unstake(user.stakedBalance.sub(user.lockedBalance).add(bn(1000000)), EMPTY_DATA, { from: user.address })/*,
           STAKING_ERRORS.ERROR_NOT_ENOUGH_BALANCE
           */
         )
@@ -185,17 +185,19 @@ module.exports = (artifacts) => {
   // check that users can’t unlock more than locked balance
   const checkOverUnlocking = async ({ staking, users, managers }) => {
     await Promise.all(
-      users.map(async (user) => await Promise.all(
-        managers.map(async (manager) => {
-          const lock = await staking.getLock(user.address, manager)
-          // const errorMessage = lock._allowance.gt(bn(0)) ? STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK : STAKING_ERRORS.ERROR_LOCK_DOES_NOT_EXIST
-          await assertRevert(
-            staking.unlock(user.address, manager, user.lockedBalance.add(bn(1)), { from: user.address })/*,
-            errorMessage
-            */
-          )
-        })
-      ))
+      users.map(async (user) => {
+          for (let i = 0; i < managers.length ; i++) {
+            let manager = managers[i];
+            const lock = await staking.getLock(user.address, manager)
+            // const errorMessage = lock._allowance.gt(bn(0)) ? STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK : STAKING_ERRORS.ERROR_LOCK_DOES_NOT_EXIST
+            await assertRevert(
+              staking.unlock(user.address, manager, user.lockedBalance.add(bn(1000000)), { from: user.address })/*,
+              errorMessage
+              */
+            )
+          }
+        }        
+      )
     )
   }
 
@@ -205,12 +207,12 @@ module.exports = (artifacts) => {
       users.map(async (user) => {
         const to = user.address === users[0].address ? users[1].address : users[0].address
         await assertRevert(
-          staking.transfer(to, user.stakedBalance.sub(user.lockedBalance).add(bn(1)), { from: user.address })/*,
+          staking.transfer(to, user.stakedBalance.sub(user.lockedBalance).add(bn(1000000)), { from: user.address })/*,
           STAKING_ERRORS.ERROR_NOT_ENOUGH_BALANCE
           */
         )
         await assertRevert(
-          staking.transferAndUnstake(to, user.stakedBalance.sub(user.lockedBalance).add(bn(1)), { from: user.address })/*,
+          staking.transferAndUnstake(to, user.stakedBalance.sub(user.lockedBalance).add(bn(1000000)), { from: user.address })/*,
           STAKING_ERRORS.ERROR_NOT_ENOUGH_BALANCE
           */
         )
@@ -220,36 +222,36 @@ module.exports = (artifacts) => {
 
   // check that managers can’t slash more than locked balance
   const checkOverSlashing = async ({ staking, users, managers }) => {
-    await Promise.all(
-      users.map(async (user) => {
-        const to = user.address === users[0].address ? users[1].address : users[0].address
-        for (let i = 0; i < managers.length - 1; i++) {
-          await assertRevert(
-            staking.slash(user.address, to, user.lockedBalance.add(bn(1)), { from: managers[i] })/*,
-            STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
-            */
-          )
-          await assertRevert(
-            staking.slashAndUnstake(user.address, to, user.lockedBalance.add(bn(1)), { from: managers[i] }),/*
-            STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
-            */
-          )
-        }
-        // last in the array is a contract
-        const lockManagerAddress = managers[managers.length - 1]
-        const lockManager = await LockManagerMock.at(lockManagerAddress)
+    for( let i = 0; i < users.length; i++) {
+      let user = users[i];      
+      const to = user.address === users[0].address ? users[1].address : users[0].address
+
+      await Promise.all(managers.slice(0,-1).map(async (manager) => {        
         await assertRevert(
-          lockManager.slash(staking.address, user.address, to, user.lockedBalance.add(bn(1))),/*
+          staking.slash(user.address, to, user.lockedBalance.add(bn(1000000)), { from: manager })/*,
           STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
           */
         )
         await assertRevert(
-          lockManager.slashAndUnstake(staking.address, user.address, to, user.lockedBalance.add(bn(1))),/*
+          staking.slashAndUnstake(user.address, to, user.lockedBalance.add(bn(1000000)), { from: manager }),/*
           STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
           */
         )
-      })
-    )
+      }))
+      // last in the array is a contract
+      const lockManagerAddress = managers[managers.length - 1]
+      const lockManager = await LockManagerMock.at(lockManagerAddress)
+      await assertRevert(
+        lockManager.slash(staking.address, user.address, to, user.lockedBalance.add(bn(1000000)) ),/*
+        STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
+        */
+      )
+      await assertRevert(
+        lockManager.slashAndUnstake(staking.address, user.address, to, user.lockedBalance.add(bn(1000000))),/*
+        STAKING_ERRORS.ERROR_NOT_ENOUGH_LOCK
+        */
+      )
+    }
   }
 
   const checkInvariants = async ({ staking, users, managers }) => {

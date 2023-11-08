@@ -35,30 +35,30 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	abciserver "github.com/tendermint/tendermint/abci/server"
-	tcmd "github.com/tendermint/tendermint/cmd/cometbft/commands"
-	tmos "github.com/tendermint/tendermint/libs/os"
-	"github.com/tendermint/tendermint/node"
-	"github.com/tendermint/tendermint/p2p"
-	pvm "github.com/tendermint/tendermint/privval"
-	"github.com/tendermint/tendermint/proxy"
-	"github.com/tendermint/tendermint/rpc/client/local"
-	dbm "github.com/tendermint/tm-db"
+	dbm "github.com/cometbft/cometbft-db"
+	abciserver "github.com/cometbft/cometbft/abci/server"
+	tcmd "github.com/cometbft/cometbft/cmd/cometbft/commands"
+	tmos "github.com/cometbft/cometbft/libs/os"
+	"github.com/cometbft/cometbft/node"
+	"github.com/cometbft/cometbft/p2p"
+	pvm "github.com/cometbft/cometbft/privval"
+	"github.com/cometbft/cometbft/proxy"
+	"github.com/cometbft/cometbft/rpc/client/local"
 
-	"github.com/cosmos/cosmos-sdk/server/rosetta"
-	crgserver "github.com/cosmos/cosmos-sdk/server/rosetta/lib/server"
+	"cosmossdk.io/tools/rosetta"
+	crgserver "cosmossdk.io/tools/rosetta/lib/server"
 
 	ethmetricsexp "github.com/ethereum/go-ethereum/metrics/exp"
 
 	errorsmod "cosmossdk.io/errors"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
-	pruningtypes "github.com/cosmos/cosmos-sdk/pruning/types"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
 	servergrpc "github.com/cosmos/cosmos-sdk/server/grpc"
 	"github.com/cosmos/cosmos-sdk/server/types"
+	pruningtypes "github.com/cosmos/cosmos-sdk/store/pruning/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/evmos/ethermint/indexer"
@@ -368,6 +368,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		logger.Info("starting node in query only mode; Tendermint is disabled")
 		config.GRPC.Enable = true
 		config.JSONRPC.EnableIndexer = false
+		config.JSONRPC.Enable = false
 	} else {
 		logger.Info("starting node with ABCI Tendermint in-process")
 
@@ -401,15 +402,19 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 	// Add the tx service to the gRPC router. We only need to register this
 	// service if API or gRPC or JSONRPC is enabled, and avoid doing so in the general
 	// case, because it spawns a new local tendermint RPC client.
+
+	var tmRPCClient *local.Local
+
 	if (config.API.Enable || config.GRPC.Enable || config.JSONRPC.Enable || config.JSONRPC.EnableIndexer) && tmNode != nil {
-		clientCtx = clientCtx.WithClient(local.New(tmNode))
+		tmRPCClient = local.New(tmNode)
+		clientCtx = clientCtx.WithClient(tmRPCClient)
 
 		app.RegisterTxService(clientCtx)
 		app.RegisterTendermintService(clientCtx)
 
-		if a, ok := app.(types.ApplicationQueryService); ok {
-			a.RegisterNodeService(clientCtx)
-		}
+		// if a, ok := app.(types.ApplicationQueryService); ok {
+		app.RegisterNodeService(clientCtx)
+		// }
 	}
 
 	metrics, err := startTelemetry(config)
@@ -433,7 +438,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 
 		idxLogger := ctx.Logger.With("indexer", "evm")
 		idxer = indexer.NewKVIndexer(idxDB, idxLogger, clientCtx)
-		indexerService := NewEVMIndexerService(idxer, clientCtx.Client)
+		indexerService := NewEVMIndexerService(idxer, tmRPCClient)
 		indexerService.SetLogger(idxLogger)
 
 		errCh := make(chan error)
@@ -565,7 +570,10 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 
 		tmEndpoint := "/websocket"
 		tmRPCAddr := cfg.RPC.ListenAddress
-		httpSrv, httpSrvDone, err = StartJSONRPC(ctx, clientCtx, tmRPCAddr, tmEndpoint, &config, idxer)
+		// TODO: (workaround) for some reason `tests/solidity/test-helper.js` not detect output stream
+		// 				add println to workaround that bug
+		println("Starting JSON-RPC server")
+		httpSrv, httpSrvDone, err = StartJSONRPC(ctx, clientCtx, tmRPCClient, tmRPCAddr, tmEndpoint, &config, idxer)
 		if err != nil {
 			return err
 		}

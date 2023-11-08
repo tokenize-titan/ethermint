@@ -20,6 +20,10 @@ import (
 	"math/big"
 	"time"
 
+	"github.com/cometbft/cometbft/libs/log"
+	tmrpc "github.com/cometbft/cometbft/rpc/client"
+	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/server"
@@ -34,8 +38,6 @@ import (
 	"github.com/evmos/ethermint/server/config"
 	ethermint "github.com/evmos/ethermint/types"
 	evmtypes "github.com/evmos/ethermint/x/evm/types"
-	"github.com/tendermint/tendermint/libs/log"
-	tmrpctypes "github.com/tendermint/tendermint/rpc/core/types"
 )
 
 // BackendI implements the Cosmos and EVM backend.
@@ -142,12 +144,17 @@ type EVMBackend interface {
 
 var _ BackendI = (*Backend)(nil)
 
-var bAttributeKeyEthereumBloom = []byte(evmtypes.AttributeKeyEthereumBloom)
+const (
+	tmWebsocketPath = "/websocket"
+)
+
+var bAttributeKeyEthereumBloom = evmtypes.AttributeKeyEthereumBloom
 
 // Backend implements the BackendI interface
 type Backend struct {
 	ctx                 context.Context
 	clientCtx           client.Context
+	tmRPC               tmrpc.Client
 	queryClient         *rpctypes.QueryClient // gRPC query client
 	logger              log.Logger
 	chainID             *big.Int
@@ -161,6 +168,7 @@ func NewBackend(
 	ctx *server.Context,
 	logger log.Logger,
 	clientCtx client.Context,
+	tmRPCClient tmrpc.Client,
 	allowUnprotectedTxs bool,
 	indexer ethermint.EVMTxIndexer,
 ) *Backend {
@@ -177,6 +185,7 @@ func NewBackend(
 	return &Backend{
 		ctx:                 context.Background(),
 		clientCtx:           clientCtx,
+		tmRPC:               tmRPCClient,
 		queryClient:         rpctypes.NewQueryClient(clientCtx),
 		logger:              logger.With("module", "backend"),
 		chainID:             chainID,

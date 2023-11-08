@@ -8,9 +8,9 @@ import (
 	"cosmossdk.io/math"
 
 	"github.com/cosmos/cosmos-sdk/client"
-	chainparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
+	appparams "github.com/evmos/ethermint/app/params"
 	"github.com/evmos/ethermint/ethereum/eip712"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -46,7 +46,7 @@ const (
 type EIP712TestSuite struct {
 	suite.Suite
 
-	config                   chainparams.EncodingConfig
+	config                   appparams.EncodingConfig
 	clientCtx                client.Context
 	useLegacyEIP712TypedData bool
 	denom                    string
@@ -120,7 +120,7 @@ func (suite *EIP712TestSuite) TestEIP712() {
 		signing.SignMode_SIGN_MODE_LEGACY_AMINO_JSON,
 	}
 
-	params := EIP712TestParams{
+	appparams := EIP712TestParams{
 		fee: txtypes.Fee{
 			Amount:   suite.makeCoins(suite.denom, math.NewInt(2000)),
 			GasLimit: 20000,
@@ -185,12 +185,12 @@ func (suite *EIP712TestSuite) TestEIP712() {
 			title: "Succeeds - Two Single-Signer MsgDelegate",
 			msgs: []sdk.Msg{
 				stakingtypes.NewMsgDelegate(
-					params.address,
+					appparams.address,
 					sdk.ValAddress(suite.createTestAddress()),
 					suite.makeCoins(suite.denom, math.NewInt(1))[0],
 				),
 				stakingtypes.NewMsgDelegate(
-					params.address,
+					appparams.address,
 					sdk.ValAddress(suite.createTestAddress()),
 					suite.makeCoins(suite.denom, math.NewInt(5))[0],
 				),
@@ -201,7 +201,7 @@ func (suite *EIP712TestSuite) TestEIP712() {
 			title: "Succeeds - Single-Signer MsgVote V1 with Omitted Value",
 			msgs: []sdk.Msg{
 				govtypesv1.NewMsgVote(
-					params.address,
+					appparams.address,
 					5,
 					govtypesv1.VoteOption_VOTE_OPTION_NO,
 					"",
@@ -213,12 +213,12 @@ func (suite *EIP712TestSuite) TestEIP712() {
 			title: "Succeeds - Single-Signer MsgSend + MsgVote",
 			msgs: []sdk.Msg{
 				govtypes.NewMsgVote(
-					params.address,
+					appparams.address,
 					5,
 					govtypes.OptionNo,
 				),
 				banktypes.NewMsgSend(
-					params.address,
+					appparams.address,
 					suite.createTestAddress(),
 					suite.makeCoins(suite.denom, math.NewInt(50)),
 				),
@@ -229,13 +229,13 @@ func (suite *EIP712TestSuite) TestEIP712() {
 			title: "Succeeds - Single-Signer 2x MsgVoteV1 with Different Schemas",
 			msgs: []sdk.Msg{
 				govtypesv1.NewMsgVote(
-					params.address,
+					appparams.address,
 					5,
 					govtypesv1.VoteOption_VOTE_OPTION_NO,
 					"",
 				),
 				govtypesv1.NewMsgVote(
-					params.address,
+					appparams.address,
 					10,
 					govtypesv1.VoteOption_VOTE_OPTION_YES,
 					"Has Metadata",
@@ -325,13 +325,13 @@ func (suite *EIP712TestSuite) TestEIP712() {
 
 				txBuilder := suite.clientCtx.TxConfig.NewTxBuilder()
 
-				txBuilder.SetGasLimit(params.fee.GasLimit)
-				txBuilder.SetFeeAmount(params.fee.Amount)
+				txBuilder.SetGasLimit(appparams.fee.GasLimit)
+				txBuilder.SetFeeAmount(appparams.fee.Amount)
 
 				err := txBuilder.SetMsgs(tc.msgs...)
 				suite.Require().NoError(err)
 
-				txBuilder.SetMemo(params.memo)
+				txBuilder.SetMemo(appparams.memo)
 
 				// Prepare signature field with empty signatures
 				txSigData := signing.SingleSignatureData{
@@ -341,7 +341,7 @@ func (suite *EIP712TestSuite) TestEIP712() {
 				txSig := signing.SignatureV2{
 					PubKey:   pubKey,
 					Data:     &txSigData,
-					Sequence: params.sequence,
+					Sequence: appparams.sequence,
 				}
 
 				err = txBuilder.SetSignatures([]signing.SignatureV2{txSig}...)
@@ -358,8 +358,8 @@ func (suite *EIP712TestSuite) TestEIP712() {
 
 				signerData := authsigning.SignerData{
 					ChainID:       chainID,
-					AccountNumber: params.accountNumber,
-					Sequence:      params.sequence,
+					AccountNumber: appparams.accountNumber,
+					Sequence:      appparams.sequence,
 					PubKey:        pubKey,
 					Address:       sdk.MustBech32ifyAddressBytes(config.Bech32Prefix, pubKey.Bytes()),
 				}

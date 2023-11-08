@@ -16,12 +16,13 @@
 package keys
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"sigs.k8s.io/yaml"
 
-	"github.com/cosmos/cosmos-sdk/client/keys"
+	// "github.com/cosmos/cosmos-sdk/client/keys"
 	cryptokeyring "github.com/cosmos/cosmos-sdk/crypto/keyring"
 )
 
@@ -46,7 +47,7 @@ func printKeyringRecord(w io.Writer, k *cryptokeyring.Record, bechKeyOut bechKey
 		}
 
 	case OutputFormatJSON:
-		out, err := keys.KeysCdc.MarshalJSON(ko)
+		out, err := json.Marshal(ko)
 		if err != nil {
 			return err
 		}

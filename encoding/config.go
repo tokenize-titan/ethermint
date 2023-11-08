@@ -18,22 +18,22 @@ package encoding
 import (
 	amino "github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/simapp/params"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
+	appparams "github.com/evmos/ethermint/app/params"
 
 	enccodec "github.com/evmos/ethermint/encoding/codec"
 )
 
 // MakeConfig creates an EncodingConfig for testing
-func MakeConfig(mb module.BasicManager) params.EncodingConfig {
+func MakeConfig(mb module.BasicManager) appparams.EncodingConfig {
 	cdc := amino.NewLegacyAmino()
 	interfaceRegistry := types.NewInterfaceRegistry()
 	codec := amino.NewProtoCodec(interfaceRegistry)
 
-	encodingConfig := params.EncodingConfig{
+	encodingConfig := appparams.EncodingConfig{
 		InterfaceRegistry: interfaceRegistry,
-		Codec:             codec,
+		Marshaler:         codec,
 		TxConfig:          tx.NewTxConfig(codec, tx.DefaultSignModes),
 		Amino:             cdc,
 	}

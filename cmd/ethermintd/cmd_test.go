@@ -7,11 +7,12 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
-	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
+	// svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
 	"github.com/evmos/ethermint/app"
 	ethermintd "github.com/evmos/ethermint/cmd/ethermintd"
+	svrcmd "github.com/evmos/ethermint/server/cmd"
 )
 
 func TestInitCmd(t *testing.T) {

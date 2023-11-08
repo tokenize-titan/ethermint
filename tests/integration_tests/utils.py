@@ -5,6 +5,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 import bech32
 from dateutil.parser import isoparse
@@ -193,10 +194,17 @@ def supervisorctl(inipath, *args):
 
 
 def parse_events(logs):
-    return {
-        ev["type"]: {attr["key"]: attr["value"] for attr in ev["attributes"]}
-        for ev in logs[0]["events"]
-    }
+    result: dict[Any, dict[Any, Any]] = {}
+    for ev in logs[0]["events"]:
+        event_type = ev["type"]
+        attributes = {attr["key"]: attr["value"] for attr in ev["attributes"]}
+
+        if event_type in result:
+            result[event_type].update(attributes)
+        else:
+            result[event_type] = attributes
+
+    return result
 
 
 def derive_new_account(n=1):

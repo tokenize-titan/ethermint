@@ -16,14 +16,14 @@
 package types
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"math/big"
 	"strings"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmtypes "github.com/tendermint/tendermint/types"
+	abci "github.com/cometbft/cometbft/abci/types"
+	tmrpc "github.com/cometbft/cometbft/rpc/client"
+	tmtypes "github.com/cometbft/cometbft/types"
 
 	errorsmod "cosmossdk.io/errors"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -91,8 +91,8 @@ func EthHeaderFromTendermint(header tmtypes.Header, bloom ethtypes.Bloom, baseFe
 }
 
 // BlockMaxGasFromConsensusParams returns the gas limit for the current block from the chain consensus params.
-func BlockMaxGasFromConsensusParams(goCtx context.Context, clientCtx client.Context, blockHeight int64) (int64, error) {
-	resConsParams, err := clientCtx.Client.ConsensusParams(goCtx, &blockHeight)
+func BlockMaxGasFromConsensusParams(goCtx context.Context, tmRPCClient tmrpc.Client, blockHeight int64) (int64, error) {
+	resConsParams, err := tmRPCClient.ConsensusParams(goCtx, &blockHeight)
 	if err != nil {
 		return int64(^uint32(0)), err
 	}
@@ -235,7 +235,7 @@ func BaseFeeFromEvents(events []abci.Event) *big.Int {
 		}
 
 		for _, attr := range event.Attributes {
-			if bytes.Equal(attr.Key, []byte(feemarkettypes.AttributeKeyBaseFee)) {
+			if attr.Key == feemarkettypes.AttributeKeyBaseFee {
 				result, success := new(big.Int).SetString(string(attr.Value), 10)
 				if success {
 					return result
