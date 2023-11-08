@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package backend
 
 import (
@@ -34,11 +34,11 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/evmos/ethermint/crypto/ethsecp256k1"
-	rpctypes "github.com/evmos/ethermint/rpc/types"
-	"github.com/evmos/ethermint/server/config"
-	ethermint "github.com/evmos/ethermint/types"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
+	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
+	"github.com/tokenize-titan/ethermint/server/config"
+	ethermint "github.com/tokenize-titan/ethermint/types"
+	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 )
 
 // Accounts returns the list of accounts available to this node.

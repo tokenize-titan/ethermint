@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"reflect"
 
-	"github.com/evmos/ethermint/x/evm/types"
+	"github.com/tokenize-titan/ethermint/x/evm/types"
 )
 
 func (suite *KeeperTestSuite) TestParams() {

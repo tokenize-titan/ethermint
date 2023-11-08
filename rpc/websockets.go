@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package rpc
 
 import (
@@ -41,11 +41,11 @@ import (
 	rpcclient "github.com/cometbft/cometbft/rpc/jsonrpc/client"
 	tmtypes "github.com/cometbft/cometbft/types"
 
-	"github.com/evmos/ethermint/rpc/ethereum/pubsub"
-	rpcfilters "github.com/evmos/ethermint/rpc/namespaces/ethereum/eth/filters"
-	"github.com/evmos/ethermint/rpc/types"
-	"github.com/evmos/ethermint/server/config"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	"github.com/tokenize-titan/ethermint/rpc/ethereum/pubsub"
+	rpcfilters "github.com/tokenize-titan/ethermint/rpc/namespaces/ethereum/eth/filters"
+	"github.com/tokenize-titan/ethermint/rpc/types"
+	"github.com/tokenize-titan/ethermint/server/config"
+	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 )
 
 type WebsocketsServer interface {

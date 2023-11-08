@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package main
 
 import (
@@ -50,17 +50,17 @@ import (
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 
-	"github.com/evmos/ethermint/app"
-	appparams "github.com/evmos/ethermint/app/params"
-	ethermintclient "github.com/evmos/ethermint/client"
-	"github.com/evmos/ethermint/client/debug"
-	"github.com/evmos/ethermint/crypto/hd"
-	"github.com/evmos/ethermint/encoding"
-	"github.com/evmos/ethermint/ethereum/eip712"
-	"github.com/evmos/ethermint/server"
-	servercfg "github.com/evmos/ethermint/server/config"
-	srvflags "github.com/evmos/ethermint/server/flags"
-	ethermint "github.com/evmos/ethermint/types"
+	"github.com/tokenize-titan/ethermint/app"
+	appparams "github.com/tokenize-titan/ethermint/app/params"
+	ethermintclient "github.com/tokenize-titan/ethermint/client"
+	"github.com/tokenize-titan/ethermint/client/debug"
+	"github.com/tokenize-titan/ethermint/crypto/hd"
+	"github.com/tokenize-titan/ethermint/encoding"
+	"github.com/tokenize-titan/ethermint/ethereum/eip712"
+	"github.com/tokenize-titan/ethermint/server"
+	servercfg "github.com/tokenize-titan/ethermint/server/config"
+	srvflags "github.com/tokenize-titan/ethermint/server/flags"
+	ethermint "github.com/tokenize-titan/ethermint/types"
 )
 
 const EnvPrefix = "ETHERMINT"

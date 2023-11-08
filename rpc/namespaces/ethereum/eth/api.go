@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package eth
 
 import (
@@ -28,11 +28,11 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/evmos/ethermint/rpc/backend"
+	"github.com/tokenize-titan/ethermint/rpc/backend"
 
-	rpctypes "github.com/evmos/ethermint/rpc/types"
-	ethermint "github.com/evmos/ethermint/types"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
+	ethermint "github.com/tokenize-titan/ethermint/types"
+	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 )
 
 // The Ethereum API allows applications to connect to an Evmos node that is

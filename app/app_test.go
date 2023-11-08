@@ -11,7 +11,7 @@ import (
 	dbm "github.com/cometbft/cometbft-db"
 	"github.com/cometbft/cometbft/libs/log"
 
-	"github.com/evmos/ethermint/encoding"
+	"github.com/tokenize-titan/ethermint/encoding"
 )
 
 func TestEthermintAppExport(t *testing.T) {

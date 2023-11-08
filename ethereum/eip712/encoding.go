@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package eip712
 
 import (
@@ -25,8 +25,8 @@ import (
 	txTypes "github.com/cosmos/cosmos-sdk/types/tx"
 
 	apitypes "github.com/ethereum/go-ethereum/signer/core/apitypes"
-	appparams "github.com/evmos/ethermint/app/params"
-	"github.com/evmos/ethermint/types"
+	appparams "github.com/tokenize-titan/ethermint/app/params"
+	"github.com/tokenize-titan/ethermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 )

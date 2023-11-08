@@ -10,7 +10,7 @@ import (
 	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simtestutil "github.com/cosmos/cosmos-sdk/testutil/sims"
-	"github.com/evmos/ethermint/encoding"
+	"github.com/tokenize-titan/ethermint/encoding"
 )
 
 func BenchmarkEthermintApp_ExportAppStateAndValidators(b *testing.B) {

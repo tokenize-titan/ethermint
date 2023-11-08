@@ -1,4 +1,4 @@
-module github.com/evmos/ethermint
+module github.com/tokenize-titan/ethermint
 
 go 1.19
 

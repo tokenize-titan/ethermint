@@ -18,15 +18,15 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/evmos/ethermint/app"
-	"github.com/evmos/ethermint/crypto/ethsecp256k1"
-	"github.com/evmos/ethermint/crypto/hd"
-	"github.com/evmos/ethermint/encoding"
-	"github.com/evmos/ethermint/indexer"
-	"github.com/evmos/ethermint/rpc/backend/mocks"
-	rpctypes "github.com/evmos/ethermint/rpc/types"
-	"github.com/evmos/ethermint/tests"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	"github.com/tokenize-titan/ethermint/app"
+	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
+	"github.com/tokenize-titan/ethermint/crypto/hd"
+	"github.com/tokenize-titan/ethermint/encoding"
+	"github.com/tokenize-titan/ethermint/indexer"
+	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
+	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
+	"github.com/tokenize-titan/ethermint/tests"
+	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 )
 
 type BackendTestSuite struct {

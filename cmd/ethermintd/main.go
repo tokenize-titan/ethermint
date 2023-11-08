@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/evmos/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
 package main
 
 import (
@@ -22,9 +22,9 @@ import (
 	// svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/evmos/ethermint/app"
-	cmdcfg "github.com/evmos/ethermint/cmd/config"
-	svrcmd "github.com/evmos/ethermint/server/cmd"
+	"github.com/tokenize-titan/ethermint/app"
+	cmdcfg "github.com/tokenize-titan/ethermint/cmd/config"
+	svrcmd "github.com/tokenize-titan/ethermint/server/cmd"
 )
 
 func main() {
