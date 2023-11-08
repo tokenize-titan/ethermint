@@ -3,7 +3,7 @@ let
   fetchEthermint = rev: builtins.fetchTarball "https://github.com/tokenize-titan/ethermint/archive/${rev}.tar.gz";
   released = pkgs.buildGoApplication rec {
     pname = "ethermintd";
-    version = "v0.22.0-t.1";
+    version = "v0.23.0-t.1";
     # src = fetchEthermint "d29cdad6e667f6089dfecbedd36bb8d3a2a7d025";
     src = pkgs.lib.sourceByRegex ../../../. [
       "^(x|app|cmd|client|server|crypto|rpc|types|encoding|ethereum|indexer|testutil|version|go.mod|go.sum|gomod2nix.toml)($|/.*)"
