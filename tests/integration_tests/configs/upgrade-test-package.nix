@@ -1,6 +1,6 @@
 let
   pkgs = import ../../../nix { };
-  fetchEthermint = rev: builtins.fetchTarball "https://github.com/evmos/ethermint/archive/${rev}.tar.gz";
+  fetchEthermint = rev: builtins.fetchTarball "https://github.com/tokenize-titan/ethermint/archive/${rev}.tar.gz";
   released = pkgs.buildGoApplication rec {
     pname = "ethermintd";
     version = "v0.22.0-t.1";
