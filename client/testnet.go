@@ -173,7 +173,8 @@ Example:
 	cmd.Flags().String(flagStartingIPAddress,
 		"192.168.0.1",
 		"Starting IP address (192.168.0.1 results in persistent peers list ID0@192.168.0.1:46656, ID1@192.168.0.2:46656, ...)")
-	cmd.Flags().String(flags.FlagKeyringBackend, flags.DefaultKeyringBackend, "Select keyring's backend (os|file|test)")
+
+	flags.AddKeyringFlags(cmd.Flags())
 
 	return cmd
 }
