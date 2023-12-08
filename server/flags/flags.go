@@ -100,6 +100,9 @@ func UpdateFlags(cmd *cobra.Command) (*cobra.Command, error) {
 			Value: "",
 			Usage: "Gas prices to determine the transaction fee (e.g. 10aphoton)",
 		},
+		flags.FlagKeyringBackend: {
+			Usage: "Select keyring's backend (os|file|kwallet|pass|test|memory) (default in client.toml)",
+		},
 	}
 
 	return OverrideFlags(cmd, overrides)
@@ -111,18 +114,26 @@ func OverrideFlags(cmd *cobra.Command, overrides map[string]FlagOverride) (*cobr
 		flag := cmd.Flags().Lookup(name)
 
 		if persistentflag != nil {
-			err := persistentflag.Value.Set(fmt.Sprintf("%v", override.Value))
-			if err != nil {
-				return nil, err
+			if override.Value != nil {
+				err := persistentflag.Value.Set(fmt.Sprintf("%v", override.Value))
+				if err != nil {
+					return nil, err
+				}
 			}
-			persistentflag.Usage = override.Usage
+			if override.Usage != "" {
+				persistentflag.Usage = override.Usage
+			}
 		}
 		if flag != nil {
-			err := flag.Value.Set(fmt.Sprintf("%v", override.Value))
-			if err != nil {
-				return nil, err
+			if override.Value != nil {
+				err := flag.Value.Set(fmt.Sprintf("%v", override.Value))
+				if err != nil {
+					return nil, err
+				}
 			}
-			flag.Usage = override.Usage
+			if override.Usage != "" {
+				flag.Usage = override.Usage
+			}
 		}
 	}
 
