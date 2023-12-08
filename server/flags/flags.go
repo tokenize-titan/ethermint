@@ -19,6 +19,7 @@ import (
 	"fmt"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
+	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	"github.com/spf13/cobra"
 )
 
@@ -102,6 +103,10 @@ func UpdateFlags(cmd *cobra.Command) (*cobra.Command, error) {
 		},
 		flags.FlagKeyringBackend: {
 			Usage: "Select keyring's backend (os|file|kwallet|pass|test|memory) (default in client.toml)",
+		},
+		genutilcli.FlagDefaultBondDenom: {
+			Value: "aphoton",
+			Usage: "genesis file default denomination, if left blank default value is 'aphoton'",
 		},
 	}
 
