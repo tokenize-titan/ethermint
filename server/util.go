@@ -20,10 +20,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tokenize-titan/ethermint/server/config"
 	"github.com/gorilla/mux"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"github.com/spf13/cobra"
+	"github.com/tokenize-titan/ethermint/server/config"
 	"golang.org/x/net/netutil"
 
 	sdkserver "github.com/cosmos/cosmos-sdk/server"
@@ -54,6 +54,7 @@ func AddCommands(
 		sdkserver.VersionCmd(),
 		tmcmd.ResetAllCmd,
 		tmcmd.ResetStateCmd,
+		sdkserver.BootstrapStateCmd(opts.AppCreator),
 	)
 
 	startCmd := StartCmd(opts)

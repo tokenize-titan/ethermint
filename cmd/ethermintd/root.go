@@ -145,13 +145,13 @@ func NewRootCmd() (*cobra.Command, appparams.EncodingConfig) {
 		ethermintclient.KeyCommands(app.DefaultNodeHome),
 	)
 
-	rootCmd, err := srvflags.AddTxFlags(rootCmd)
+	// add rosetta
+	rootCmd.AddCommand(rosettaCmd.RosettaCommand(encodingConfig.InterfaceRegistry, encodingConfig.Marshaler))
+
+	rootCmd, err := srvflags.UpdateFlags(rootCmd)
 	if err != nil {
 		panic(err)
 	}
-
-	// add rosetta
-	rootCmd.AddCommand(rosettaCmd.RosettaCommand(encodingConfig.InterfaceRegistry, encodingConfig.Marshaler))
 
 	return rootCmd, encodingConfig
 }
