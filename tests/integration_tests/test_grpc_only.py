@@ -75,6 +75,7 @@ def test_grpc_mode(custom_ethermint):
         custom_ethermint.base_dir / "../tasks.ini", "stop", "ethermint_9000-1-node1"
     )
 
+    print("Test base dir: ", custom_ethermint.base_dir)
     # run grpc-only mode directly with existing chain state
     with (custom_ethermint.base_dir / "node1.log").open("a") as logfile:
         proc = subprocess.Popen(
@@ -93,6 +94,8 @@ def test_grpc_mode(custom_ethermint):
             grpc_port = ports.grpc_port(custom_ethermint.base_port(1))
             wait_for_port(grpc_port)
             wait_for_port(api_port)
+            # delay 5 s
+            time.sleep(5)
 
             # it don't works without proposer address neither
             rsp = grpc_eth_call(api_port, msg, chain_id=9000)
