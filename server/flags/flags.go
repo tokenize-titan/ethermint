@@ -16,8 +16,6 @@
 package flags
 
 import (
-	"fmt"
-
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	"github.com/spf13/cobra"
@@ -86,7 +84,7 @@ const (
 )
 
 type FlagOverride struct {
-	Value interface{}
+	Value string
 	Usage string
 }
 
@@ -119,8 +117,9 @@ func OverrideFlags(cmd *cobra.Command, overrides map[string]FlagOverride) (*cobr
 		flag := cmd.Flags().Lookup(name)
 
 		if persistentflag != nil {
-			if override.Value != nil {
-				err := persistentflag.Value.Set(fmt.Sprintf("%v", override.Value))
+			if override.Value != "" {
+				persistentflag.DefValue = override.Value
+				err := persistentflag.Value.Set(override.Value)
 				if err != nil {
 					return nil, err
 				}
@@ -130,8 +129,9 @@ func OverrideFlags(cmd *cobra.Command, overrides map[string]FlagOverride) (*cobr
 			}
 		}
 		if flag != nil {
-			if override.Value != nil {
-				err := flag.Value.Set(fmt.Sprintf("%v", override.Value))
+			if override.Value != "" {
+				flag.DefValue = override.Value
+				err := flag.Value.Set(override.Value)
 				if err != nil {
 					return nil, err
 				}
