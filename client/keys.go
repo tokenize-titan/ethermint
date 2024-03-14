@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package client
 
 import (
@@ -24,8 +24,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/keys"
 	"github.com/spf13/cobra"
 
-	clientkeys "github.com/tokenize-titan/ethermint/client/keys"
-	"github.com/tokenize-titan/ethermint/crypto/hd"
+	clientkeys "github.com/titantkx/ethermint/client/keys"
+	"github.com/titantkx/ethermint/crypto/hd"
 )
 
 // KeyCommands registers a sub-tree of commands to interact with

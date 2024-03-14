@@ -6,12 +6,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tokenize-titan/ethermint/app/ante"
-	"github.com/tokenize-titan/ethermint/server/config"
-	"github.com/tokenize-titan/ethermint/tests"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/app/ante"
+	"github.com/titantkx/ethermint/server/config"
+	"github.com/titantkx/ethermint/tests"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 )

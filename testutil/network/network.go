@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package network
 
 import (
@@ -62,15 +62,15 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	appparams "github.com/tokenize-titan/ethermint/app/params"
+	appparams "github.com/titantkx/ethermint/app/params"
 
-	"github.com/tokenize-titan/ethermint/crypto/hd"
-	"github.com/tokenize-titan/ethermint/encoding"
-	"github.com/tokenize-titan/ethermint/server/config"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/crypto/hd"
+	"github.com/titantkx/ethermint/encoding"
+	"github.com/titantkx/ethermint/server/config"
+	ethermint "github.com/titantkx/ethermint/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 
-	"github.com/tokenize-titan/ethermint/app"
+	"github.com/titantkx/ethermint/app"
 )
 
 // network lock to only allow one test network at a time

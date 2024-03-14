@@ -3,9 +3,9 @@ package ante_test
 import (
 	"math/big"
 
-	"github.com/tokenize-titan/ethermint/tests"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/tests"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 func (suite *AnteTestSuite) TestSignatures() {

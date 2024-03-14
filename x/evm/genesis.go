@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package evm
 
 import (
@@ -25,9 +25,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm/keeper"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm/keeper"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 // InitGenesis initializes genesis state based on exported genesis

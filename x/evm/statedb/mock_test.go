@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/x/evm/statedb"
 )
 
 var (

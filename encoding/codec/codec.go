@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package codec
 
 import (
@@ -21,8 +21,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	cryptocodec "github.com/tokenize-titan/ethermint/crypto/codec"
-	ethermint "github.com/tokenize-titan/ethermint/types"
+	cryptocodec "github.com/titantkx/ethermint/crypto/codec"
+	ethermint "github.com/titantkx/ethermint/types"
 )
 
 // RegisterLegacyAminoCodec registers Interfaces from types, crypto, and SDK std.

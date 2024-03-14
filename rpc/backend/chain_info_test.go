@@ -6,17 +6,17 @@ import (
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethrpc "github.com/ethereum/go-ethereum/rpc"
-	rpc "github.com/tokenize-titan/ethermint/rpc/types"
-	"github.com/tokenize-titan/ethermint/tests"
+	rpc "github.com/titantkx/ethermint/rpc/types"
+	"github.com/titantkx/ethermint/tests"
 	"google.golang.org/grpc/metadata"
 
 	"github.com/cometbft/cometbft/abci/types"
 	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
-	feemarkettypes "github.com/tokenize-titan/ethermint/x/feemarket/types"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
+	feemarkettypes "github.com/titantkx/ethermint/x/feemarket/types"
 )
 
 func (suite *BackendTestSuite) TestBaseFee() {

@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"reflect"
 
-	"github.com/tokenize-titan/ethermint/x/feemarket/types"
+	"github.com/titantkx/ethermint/x/feemarket/types"
 )
 
 func (suite *KeeperTestSuite) TestSetGetParams() {

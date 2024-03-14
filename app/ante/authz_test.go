@@ -12,14 +12,14 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	utiltx "github.com/tokenize-titan/ethermint/testutil/tx"
+	utiltx "github.com/titantkx/ethermint/testutil/tx"
 
-	"github.com/tokenize-titan/ethermint/app/ante"
+	"github.com/titantkx/ethermint/app/ante"
 
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
 
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 func (suite *AnteTestSuite) TestAuthzLimiterDecorator() {

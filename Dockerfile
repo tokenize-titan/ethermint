@@ -4,7 +4,7 @@ FROM golang:alpine AS build-env
 ENV PACKAGES git build-base
 
 # Set working directory for the build
-WORKDIR /go/src/github.com/tokenize-titan/ethermint
+WORKDIR /go/src/github.com/titantkx/ethermint
 
 # Install dependencies
 RUN apk add --update $PACKAGES
@@ -24,7 +24,7 @@ RUN apk add --update ca-certificates jq
 WORKDIR /
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/tokenize-titan/ethermint/build/ethermintd /usr/bin/ethermintd
+COPY --from=build-env /go/src/github.com/titantkx/ethermint/build/ethermintd /usr/bin/ethermintd
 
 # Run ethermintd by default
 CMD ["ethermintd"]

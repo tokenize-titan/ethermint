@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/tokenize-titan/ethermint/testutil/network"
+	"github.com/titantkx/ethermint/testutil/network"
 )
 
 type IntegrationTestSuite struct {

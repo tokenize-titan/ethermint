@@ -9,10 +9,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
-	"github.com/tokenize-titan/ethermint/tests"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
+	"github.com/titantkx/ethermint/tests"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 	"google.golang.org/grpc/metadata"
 )
 

@@ -9,10 +9,10 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	ethermint "github.com/tokenize-titan/ethermint/types"
 	"github.com/spf13/viper"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	ethermint "github.com/titantkx/ethermint/types"
 	"google.golang.org/grpc/metadata"
 )
 

@@ -10,10 +10,10 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	goethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	"github.com/tokenize-titan/ethermint/tests"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	"github.com/titantkx/ethermint/tests"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 	"google.golang.org/grpc/metadata"
 )
 

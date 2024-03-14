@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package types
 
 import (
@@ -22,7 +22,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
-	ethermint "github.com/tokenize-titan/ethermint/types"
+	ethermint "github.com/titantkx/ethermint/types"
 )
 
 // NewTransactionLogs creates a new NewTransactionLogs instance.

@@ -13,10 +13,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	"github.com/ethereum/go-ethereum/params"
-	"github.com/tokenize-titan/ethermint/encoding"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/encoding"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 var _ DynamicFeeEVMKeeper = MockEVMKeeper{}

@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package ante
 
 import (
@@ -26,10 +26,10 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/params"
 
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
-	evm "github.com/tokenize-titan/ethermint/x/evm/vm"
-	feemarkettypes "github.com/tokenize-titan/ethermint/x/feemarket/types"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
+	evm "github.com/titantkx/ethermint/x/evm/vm"
+	feemarkettypes "github.com/titantkx/ethermint/x/feemarket/types"
 )
 
 // DynamicFeeEVMKeeper is a subset of EVMKeeper interface that supports dynamic fee checker

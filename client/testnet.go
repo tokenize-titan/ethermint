@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package client
 
 // DONTCOVER
@@ -53,13 +53,13 @@ import (
 	mintypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/tokenize-titan/ethermint/crypto/hd"
-	"github.com/tokenize-titan/ethermint/server/config"
-	srvflags "github.com/tokenize-titan/ethermint/server/flags"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/crypto/hd"
+	"github.com/titantkx/ethermint/server/config"
+	srvflags "github.com/titantkx/ethermint/server/flags"
+	ethermint "github.com/titantkx/ethermint/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 
-	"github.com/tokenize-titan/ethermint/testutil/network"
+	"github.com/titantkx/ethermint/testutil/network"
 )
 
 var (

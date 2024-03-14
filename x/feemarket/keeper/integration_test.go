@@ -18,19 +18,19 @@ import (
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"github.com/tokenize-titan/ethermint/app"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	"github.com/tokenize-titan/ethermint/encoding"
-	"github.com/tokenize-titan/ethermint/tests"
-	"github.com/tokenize-titan/ethermint/testutil"
-	"github.com/tokenize-titan/ethermint/x/feemarket/types"
+	"github.com/titantkx/ethermint/app"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/encoding"
+	"github.com/titantkx/ethermint/tests"
+	"github.com/titantkx/ethermint/testutil"
+	"github.com/titantkx/ethermint/x/feemarket/types"
 
 	dbm "github.com/cometbft/cometbft-db"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/testutil/sims"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 var _ = Describe("Feemarket", func() {

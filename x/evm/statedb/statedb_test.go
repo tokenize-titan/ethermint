@@ -9,8 +9,8 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
 	"github.com/stretchr/testify/suite"
+	"github.com/titantkx/ethermint/x/evm/statedb"
 )
 
 var (

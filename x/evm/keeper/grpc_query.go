@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package keeper
 
 import (
@@ -39,9 +39,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	ethparams "github.com/ethereum/go-ethereum/params"
 
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 var _ types.QueryServer = Keeper{}

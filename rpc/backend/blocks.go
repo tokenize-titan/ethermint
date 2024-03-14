@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package backend
 
 import (
@@ -27,9 +27,9 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/trie"
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 	"github.com/pkg/errors"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )

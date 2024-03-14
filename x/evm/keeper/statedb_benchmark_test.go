@@ -10,7 +10,7 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/tokenize-titan/ethermint/tests"
+	"github.com/titantkx/ethermint/tests"
 )
 
 func BenchmarkCreateAccountNew(b *testing.B) {

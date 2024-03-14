@@ -6,9 +6,9 @@ import (
 	tmtypes "github.com/cometbft/cometbft/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	ethrpc "github.com/tokenize-titan/ethermint/rpc/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	ethrpc "github.com/titantkx/ethermint/rpc/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 func (suite *BackendTestSuite) TestGetLogs() {

@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package indexer
 
 import (
@@ -28,10 +28,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authante "github.com/cosmos/cosmos-sdk/x/auth/ante"
 	"github.com/ethereum/go-ethereum/common"
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
 
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	ethermint "github.com/titantkx/ethermint/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 const (

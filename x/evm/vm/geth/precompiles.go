@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package geth
 
 import (
@@ -21,7 +21,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/params"
 
-	evm "github.com/tokenize-titan/ethermint/x/evm/vm"
+	evm "github.com/titantkx/ethermint/x/evm/vm"
 )
 
 // GetPrecompiles returns all the precompiled contracts defined given the

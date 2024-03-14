@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package ante
 
 import (
@@ -33,11 +33,11 @@ import (
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	"github.com/tokenize-titan/ethermint/ethereum/eip712"
-	ethermint "github.com/tokenize-titan/ethermint/types"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/ethereum/eip712"
+	ethermint "github.com/titantkx/ethermint/types"
 
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 var ethermintCodec codec.ProtoCodecMarshaler

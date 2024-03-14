@@ -9,9 +9,9 @@ import (
 	"github.com/ethereum/go-ethereum/core"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/tokenize-titan/ethermint/x/evm/keeper"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/x/evm/keeper"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 // LogRecordHook records all the logs

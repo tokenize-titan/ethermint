@@ -14,10 +14,10 @@ import (
 	"github.com/ethereum/go-ethereum/trie"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	ethrpc "github.com/tokenize-titan/ethermint/rpc/types"
-	"github.com/tokenize-titan/ethermint/tests"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	ethrpc "github.com/titantkx/ethermint/rpc/types"
+	"github.com/titantkx/ethermint/tests"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 func (suite *BackendTestSuite) TestBlockNumber() {

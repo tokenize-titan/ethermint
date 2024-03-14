@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"testing"
 
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 func BenchmarkSetParams(b *testing.B) {

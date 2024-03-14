@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package tx
 
 import (
@@ -26,18 +26,18 @@ import (
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	cryptocodec "github.com/tokenize-titan/ethermint/crypto/codec"
+	cryptocodec "github.com/titantkx/ethermint/crypto/codec"
 
 	"github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
-	"github.com/tokenize-titan/ethermint/ethereum/eip712"
+	"github.com/titantkx/ethermint/ethereum/eip712"
 
 	"github.com/cosmos/cosmos-sdk/types/tx/signing"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
 
-	"github.com/tokenize-titan/ethermint/types"
+	"github.com/titantkx/ethermint/types"
 
-	"github.com/tokenize-titan/ethermint/app"
+	"github.com/titantkx/ethermint/app"
 )
 
 type EIP712TxArgs struct {

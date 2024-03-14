@@ -10,9 +10,9 @@ import (
 	// svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
-	"github.com/tokenize-titan/ethermint/app"
-	ethermintd "github.com/tokenize-titan/ethermint/cmd/ethermintd"
-	svrcmd "github.com/tokenize-titan/ethermint/server/cmd"
+	"github.com/titantkx/ethermint/app"
+	ethermintd "github.com/titantkx/ethermint/cmd/ethermintd"
+	svrcmd "github.com/titantkx/ethermint/server/cmd"
 )
 
 func TestInitCmd(t *testing.T) {

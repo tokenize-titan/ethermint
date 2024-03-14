@@ -12,11 +12,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/tokenize-titan/ethermint/indexer"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/indexer"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
+	ethermint "github.com/titantkx/ethermint/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 	"google.golang.org/grpc/metadata"
 )
 

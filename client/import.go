@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package client
 
 import (
@@ -24,9 +24,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/input"
 	"github.com/cosmos/cosmos-sdk/crypto"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
 
-	"github.com/tokenize-titan/ethermint/crypto/hd"
+	"github.com/titantkx/ethermint/crypto/hd"
 )
 
 // UnsafeImportKeyCommand imports private keys from a keyfile.

@@ -2,9 +2,9 @@ package backend
 
 import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	rpc "github.com/tokenize-titan/ethermint/rpc/types"
-	feemarkettypes "github.com/tokenize-titan/ethermint/x/feemarket/types"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	rpc "github.com/titantkx/ethermint/rpc/types"
+	feemarkettypes "github.com/titantkx/ethermint/x/feemarket/types"
 )
 
 var _ feemarkettypes.QueryClient = &mocks.FeeMarketQueryClient{}

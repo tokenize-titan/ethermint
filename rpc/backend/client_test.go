@@ -15,11 +15,11 @@ import (
 	"github.com/cometbft/cometbft/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/tokenize-titan/ethermint/rpc/backend/mocks"
-	rpc "github.com/tokenize-titan/ethermint/rpc/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
 	mock "github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"github.com/titantkx/ethermint/rpc/backend/mocks"
+	rpc "github.com/titantkx/ethermint/rpc/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 // Client defines a mocked object that implements the Tendermint JSON-RPC Client

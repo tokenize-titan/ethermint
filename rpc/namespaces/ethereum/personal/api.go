@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package personal
 
 import (
@@ -21,10 +21,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/tokenize-titan/ethermint/rpc/backend"
+	"github.com/titantkx/ethermint/rpc/backend"
 
-	"github.com/tokenize-titan/ethermint/crypto/hd"
-	ethermint "github.com/tokenize-titan/ethermint/types"
+	"github.com/titantkx/ethermint/crypto/hd"
+	ethermint "github.com/titantkx/ethermint/types"
 
 	"github.com/cometbft/cometbft/libs/log"
 
@@ -36,7 +36,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
 )
 
 // PrivateAccountAPI is the personal_ prefixed set of APIs in the Web3 JSON-RPC spec.

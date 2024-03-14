@@ -12,17 +12,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package cli
 
 import (
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
 	"github.com/spf13/cobra"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 // GetQueryCmd returns the parent command for all x/bank CLi query commands.

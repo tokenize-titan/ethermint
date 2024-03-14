@@ -13,14 +13,14 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ethlogger "github.com/ethereum/go-ethereum/eth/tracers/logger"
 	ethparams "github.com/ethereum/go-ethereum/params"
-	"github.com/tokenize-titan/ethermint/tests"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/tests"
+	"github.com/titantkx/ethermint/x/evm/statedb"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tokenize-titan/ethermint/server/config"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/server/config"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 // Not valid Ethereum address

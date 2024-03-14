@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package keys
 
 import (
@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"sort"
 
-	etherminthd "github.com/tokenize-titan/ethermint/crypto/hd"
+	etherminthd "github.com/titantkx/ethermint/crypto/hd"
 
 	bip39 "github.com/cosmos/go-bip39"
 	"github.com/spf13/cobra"

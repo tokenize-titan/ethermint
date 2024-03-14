@@ -9,15 +9,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tokenize-titan/ethermint/app"
+	"github.com/titantkx/ethermint/app"
 
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	evmkeeper "github.com/tokenize-titan/ethermint/x/evm/keeper"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
+	evmkeeper "github.com/titantkx/ethermint/x/evm/keeper"
+	"github.com/titantkx/ethermint/x/evm/statedb"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/consensus/ethash"
@@ -33,7 +33,7 @@ import (
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	tmversion "github.com/cometbft/cometbft/proto/tendermint/version"
 	"github.com/cometbft/cometbft/version"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
 )
 
 var (

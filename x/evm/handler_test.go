@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tokenize-titan/ethermint/x/evm/keeper"
+	"github.com/titantkx/ethermint/x/evm/keeper"
 
 	sdkmath "cosmossdk.io/math"
 	"github.com/cosmos/gogoproto/proto"
@@ -17,7 +17,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	feemarkettypes "github.com/tokenize-titan/ethermint/x/feemarket/types"
+	feemarkettypes "github.com/titantkx/ethermint/x/feemarket/types"
 
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -32,13 +32,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tokenize-titan/ethermint/app"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	"github.com/tokenize-titan/ethermint/tests"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/app"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	"github.com/titantkx/ethermint/tests"
+	ethermint "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/x/evm/types"
 
 	"github.com/cometbft/cometbft/crypto/tmhash"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"

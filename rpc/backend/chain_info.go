@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package backend
 
 import (
@@ -26,10 +26,10 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rpc"
-	rpctypes "github.com/tokenize-titan/ethermint/rpc/types"
-	ethermint "github.com/tokenize-titan/ethermint/types"
-	evmtypes "github.com/tokenize-titan/ethermint/x/evm/types"
-	feemarkettypes "github.com/tokenize-titan/ethermint/x/feemarket/types"
+	rpctypes "github.com/titantkx/ethermint/rpc/types"
+	ethermint "github.com/titantkx/ethermint/types"
+	evmtypes "github.com/titantkx/ethermint/x/evm/types"
+	feemarkettypes "github.com/titantkx/ethermint/x/feemarket/types"
 )
 
 // ChainID is the EIP-155 replay-protection chain id for the current ethereum chain config.

@@ -6,11 +6,11 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	"github.com/tokenize-titan/ethermint/crypto/ethsecp256k1"
-	etherminttypes "github.com/tokenize-titan/ethermint/types"
-	"github.com/tokenize-titan/ethermint/x/evm"
-	"github.com/tokenize-titan/ethermint/x/evm/statedb"
-	"github.com/tokenize-titan/ethermint/x/evm/types"
+	"github.com/titantkx/ethermint/crypto/ethsecp256k1"
+	etherminttypes "github.com/titantkx/ethermint/types"
+	"github.com/titantkx/ethermint/x/evm"
+	"github.com/titantkx/ethermint/x/evm/statedb"
+	"github.com/titantkx/ethermint/x/evm/types"
 )
 
 func (suite *EvmTestSuite) TestInitGenesis() {

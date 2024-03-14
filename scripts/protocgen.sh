@@ -21,5 +21,5 @@ done
 # TODO: command to generate docs using protoc-gen-doc was deleted here
 
 # move proto files to the right places
-cp -r github.com/tokenize-titan/ethermint/* ./
+cp -r github.com/titantkx/ethermint/* ./
 rm -rf github.com

@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the Ethermint library. If not, see https://github.com/tokenize-titan/ethermint/blob/main/LICENSE
+// along with the Ethermint library. If not, see https://github.com/titantkx/ethermint/blob/main/LICENSE
 package encoding
 
 import (
@@ -20,9 +20,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
-	appparams "github.com/tokenize-titan/ethermint/app/params"
+	appparams "github.com/titantkx/ethermint/app/params"
 
-	enccodec "github.com/tokenize-titan/ethermint/encoding/codec"
+	enccodec "github.com/titantkx/ethermint/encoding/codec"
 )
 
 // MakeConfig creates an EncodingConfig for testing
