@@ -52,9 +52,13 @@ func InitGenesis(
 	for _, account := range data.Accounts {
 		address := common.HexToAddress(account.Address)
 		accAddress := sdk.AccAddress(address.Bytes())
-		// check that the EVM balance the matches the account balance
+		// check that the EVM code hash the matches the account code hash
 		acc := accountKeeper.GetAccount(ctx, accAddress)
 		if acc == nil {
+			if len(account.Code) == 0 {
+				// if the account doesn't exist and there's no code, we can skip it
+				continue
+			}
 			panic(fmt.Errorf("account not found for address %s", account.Address))
 		}
 
