@@ -52,13 +52,28 @@ func (suite *EvmTestSuite) TestInitGenesis() {
 			false,
 		},
 		{
-			"account not found",
+			"account not found and no code",
 			func() {},
 			&types.GenesisState{
 				Params: types.DefaultParams(),
 				Accounts: []types.GenesisAccount{
 					{
 						Address: address.String(),
+						Code:    "",
+					},
+				},
+			},
+			false,
+		},
+		{
+			"account not found and have code",
+			func() {},
+			&types.GenesisState{
+				Params: types.DefaultParams(),
+				Accounts: []types.GenesisAccount{
+					{
+						Address: address.String(),
+						Code:    "ffffffff",
 					},
 				},
 			},

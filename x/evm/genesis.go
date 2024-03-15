@@ -93,6 +93,10 @@ func InitGenesis(
 // ExportGenesis exports genesis state of the EVM module
 func ExportGenesis(ctx sdk.Context, k *keeper.Keeper, ak types.AccountKeeper) *types.GenesisState {
 	var ethGenAccounts []types.GenesisAccount
+
+	// Use map to ensure not export duplicate accounts
+	seenAccounts := make(map[string]bool)
+
 	ak.IterateAccounts(ctx, func(account authtypes.AccountI) bool {
 		ethAccount, ok := account.(ethermint.EthAccountI)
 		if !ok {
@@ -101,6 +105,10 @@ func ExportGenesis(ctx sdk.Context, k *keeper.Keeper, ak types.AccountKeeper) *t
 		}
 
 		addr := ethAccount.EthAddress()
+		if seenAccounts[addr.String()] {
+			return false
+		}
+		seenAccounts[addr.String()] = true
 
 		storage := k.GetAccountStorage(ctx, addr)
 
